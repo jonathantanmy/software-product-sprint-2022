@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>Todo List</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <title>TEAM-23 PROJECT</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <script src="script.js"></script>
   </head>
   <body onload="loadTasks()">
-    <h1>Todo List</h1>
+    <header>
+      <div class="navbar">
+        <a href="#">TITLE</a>
+        <a href="#">HOME</a>
+        <a href="#">LINK2</a>
+        <a href="WordStoringTest.html">WordStorer</a>
+        <div class="search-container">
+          <form action="#">
+            <input type="text" placeholder="Search.." name="search" />
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </form>
+        </div>
+      </div>
+    </header>
+    <section>
+        <h1>Insert Words</h1>
 
     <form method="POST" action="/new-task">
       <input type="text" name="title" />
@@ -18,6 +37,6 @@
     <hr/>
 
     <ul id="task-list"></ul>
-
+    </section>
   </body>
 </html>
