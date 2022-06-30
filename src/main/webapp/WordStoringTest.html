@@ -10,7 +10,7 @@
     />
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="loadTasks()">
     <header>
       <div class="navbar">
         <a href="#">TITLE</a>
@@ -25,5 +25,18 @@
         </div>
       </div>
     </header>
+    <section>
+        <h1>Insert Words</h1>
+
+    <form method="POST" action="/new-task">
+      <input type="text" name="title" />
+      <br/>
+      <button>Submit</button>
+    </form>
+
+    <hr/>
+
+    <ul id="task-list"></ul>
+    </section>
   </body>
 </html>
