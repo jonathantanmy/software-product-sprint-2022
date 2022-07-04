@@ -79,8 +79,7 @@ button.btn-remove {
   border: 1px solid #857d9a;
   border-radius: 5px;
   cursor: pointer;
-  overflow: hidden;
-    text-overflow: ellipsis;
+  
 }
 .custom_img_input:hover {
   background-color: #7f6fa4;
@@ -90,6 +89,8 @@ button.btn-remove {
   margin-left: 10px;
   font-family: sans-serif;
   color: #aaa;
+  overflow: hidden;
+    text-overflow: ellipsis;
 }
 .upload_img_input {
   display: none;
