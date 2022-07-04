@@ -8,22 +8,93 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     <script src="script.js"></script>
+    <script src="/__/firebase/9.8.3/firebase-app-compat.js"></script>
+    <script src="/__/firebase/9.8.3/firebase-auth-compat.js"></script>
+    <script src="/__/firebase/init.js"></script>
+  <script type="text/javascript">
+
+    /**
+     * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+     *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+     *    out, and that is where we update the UI.
+     */
+     function initApp() {
+        // Listening for auth state changes.
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {// User is signed in.
+              console.log("there is a user");
+            
+
+            document.querySelector(".avatar").style.display="none";
+            document.querySelector(".signed_in_avatar").style.display="block";
+            document.getElementById("create_link").href ="create.html";
+          }else {
+            document.querySelector(".avatar").style.display="flex";
+            document.querySelector(".signed_in_avatar").style.display="none";
+            document.getElementById("create_link").href ="login.html";
+          } ;
+        });
+      }
+    
+    window.onload = function() {
+      initApp();
+    };
+  </script>
   </head>
-  <body>
-    <header>
-      <div class="navbar">
-        <a href="#">TITLE</a>
-        <a href="#">HOME</a>
-        <a href="#">LINK2</a>
-        <a href="WordStoringTest.html">WordStorer</a>
-        <div class="search-container">
-          <form action="#">
-            <input type="text" placeholder="Search.." name="search" />
-            <button type="submit"><i class="fa fa-search"></i></button>
-          </form>
-        </div>
-      </div>
-    </header>
-  </body>
+  
+<body onload="loadHomeSet();initApp()">
+    <head>
+        <title>Create</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        />
+        <link rel="stylesheet" href="style.css" />
+    
+        <script src="script.js"></script>
+        <link rel="stylesheet" href="create.css" />
+      </head>
+      <body>
+        <header>
+          <div class="navbar">
+            <a href="#">TALKY TALKY</a>
+            <a href="#">HOME</a>
+            <a href="" id="create_link">CREATE</a>
+            <a href="#">ABOUT</a>
+            <a href="WordStoringTest.html">WordStorer</a>
+          </div>
+    
+          <div class="right-navbar">
+            <div class="search-container">
+              <form action="#">
+                <input type="text" placeholder="Search.." name="search" />
+                <button type="submit"><i class="fa fa-search"></i></button>
+              </form>
+            </div>
+            <div class="avatar"><a href="login.html"><i class="fa fa-user"></i></a></div>
+            <div class="signed_in_avatar">
+              <button><i class="fa fa-user"></i></button>
+              <ul>
+                <li><a href="#">My Sets</a></li>
+                <li><a href="#">Settings</a></li>
+                <li ><a href="logout.html">Log Out</a></li>
+              </ul>
+            </div>
+          </div>
+        </header>
+        <div class="grid" style="gap:60px;"></div>
+        <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
+        <script>
+          var config = {
+            apiKey: "AIzaSyAFKd2dsIQFjbKjnqw-V5CBnHb0FVbi32A",
+            authDomain: "summer22-sps-23.firebaseapp.com",
+          };
+          firebase.initializeApp(config);
+        </script>
+    </body>
 </html>
