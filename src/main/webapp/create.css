@@ -21,6 +21,7 @@ button#addmorebtn {
   outline: none;
   border: none;
   background-color: inherit;
+  cursor: pointer;
 }
 button.btn-remove {
   border: none;
@@ -78,6 +79,8 @@ button.btn-remove {
   border: 1px solid #857d9a;
   border-radius: 5px;
   cursor: pointer;
+  overflow: hidden;
+    text-overflow: ellipsis;
 }
 .custom_img_input:hover {
   background-color: #7f6fa4;
