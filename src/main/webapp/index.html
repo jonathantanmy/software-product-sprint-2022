@@ -25,17 +25,7 @@
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {// User is signed in.
               console.log("there is a user");
-            //-----------------------------------------------
-                //this it for the form that creates the sets
-                var displayName = user.displayName;
-                var email = user.email;
-                console.log(email);
-                var input = document.createElement("input");
-                input.setAttribute("type", "hidden");
-                input.setAttribute("name", "user");
-                input.setAttribute("value", email);
-
-          //----------------------------------------------------
+            
 
             document.querySelector(".avatar").style.display="none";
             document.querySelector(".signed_in_avatar").style.display="block";
