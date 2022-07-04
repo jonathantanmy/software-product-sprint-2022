@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Create</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="create.css" />
+
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <a href="#">TALKY TALKY</a>
+        <a href="#">HOME</a>
+        <a href="#">CREATE</a>
+        <a href="#">ABOUT</a>
+      </div>
+
+      <div class="right-navbar">
+        <div class="search-container">
+          <form action="#">
+            <input type="text" placeholder="Search.." name="search" />
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </form>
+        </div>
+        <div class="avatar"><i class="fa fa-user"></i></div>
+        <div class="signed_in_avatar">
+          <button><i class="fa fa-user"></i></button>
+          <ul>
+            <li><a href="#">My Sets</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Log out</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div class="create_container">
+      <div class="row">
+        <div class="create_top_section">
+          <input
+            type="text"
+            id="set_name"
+            placeholder="SET NAME.."
+            name="set_name"
+          />
+          <div class="add_more_button">
+            <button id="addmorebtn">
+              ADD MORE &nbsp <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="set_container">
+          <form action="" class="MutipleRecord">
+            <input type="hidden" id="hidden_set_name" />
+            <div class="grid">
+              <div class="duplicate-row">
+                <button class="btn-remove">REMOVE</button>
+
+                <div class="input_input_box">
+                  <input
+                    type="text"
+                    class="term_input"
+                    name="message[]"
+                    placeholder="TERM"
+                  />
+                </div>
+
+                <div class="upload_img_input_box">
+                  <input
+                    class="upload_img_input"
+                    type="file"
+                    name="image[]"
+                    accept="image/*"
+                  />
+                  <button type="button" class="custom_img_input">
+                    CHOOSE A IMAGE
+                  </button>
+                  <span class="custom_input_file_text"
+                    >No image chosen, yet</span
+                  >
+                </div>
+                <div class="preview_container">
+                  <label for="">Preview:</label>
+                  <div class="preview_box">
+                    <div class="preview_img"></div>
+                    <div class="copy_text"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="submit" id="set_submit_button">SUBMIT</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // to load the first one
+        openFile();
+        onInput();
+        setNameOnInput();
+        $("#addmorebtn").click(function () {
+          $(".MutipleRecord .duplicate-row:last-child")
+            .clone()
+            .appendTo(".grid");
+          openFile();
+          onInput();
+        });
+
+        $(document).on("click", ".btn-remove", function () {
+          if ($(".MutipleRecord .duplicate-row").length > 1) {
+            $(this).parents(".duplicate-row").remove();
+            updateTermNum();
+          }
+        });
+      });
+    </script>
+    <script>
+      function setNameOnInput() {
+        console.log("set Name");
+        const set_name = document.getElementById("set_name");
+        const hidden_set_name = document.getElementById("hidden_set_name");
+        set_name.addEventListener("input", function () {
+          hidden_set_name.setAttribute("value", set_name.value);
+        });
+      }
+
+      function onInput() {
+        console.log("on inpput function loaded");
+        const termList = document.querySelectorAll(".term_input");
+        console.log(termList);
+        termList.forEach((e) => {
+          console.log(e.parentElement.nextElementSibling.nextElementSibling);
+          const previewText =
+            e.parentElement.nextElementSibling.nextElementSibling.querySelector(
+              ".copy_text"
+            );
+          //live minicing -- on each key change in input field will reproduce it
+          e.addEventListener("input", function () {
+            previewText.innerHTML = e.value;
+          });
+        });
+      }
+
+      function updateTermNum() {
+        const termInputList = document.querySelectorAll(".term_input");
+        for (i = 0; i < termInputList.length; i++) {
+          termInputList[i].placeholder = "Term " + (i + 1);
+        }
+      }
+      function openFile() {
+        console.log("button was clicked");
+        //const realFileButton = document.querySelectorAll("upload_img_input");
+        const customButton = document.querySelectorAll(".custom_img_input");
+        console.log(customButton);
+        console.log(customButton.length);
+
+        updateTermNum();
+        customButton.forEach((e) => {
+          console.log("in for eachyyyy");
+          const realButton = e.parentElement.querySelector(".upload_img_input");
+          const customText = e.parentElement.querySelector(
+            ".custom_input_file_text"
+          );
+
+          e.addEventListener("click", function () {
+            //virtually click the real input type file = open file explorer
+            console.log("before click");
+            realButton.click();
+          });
+
+          //when a file is chosen(=="changes")
+          realButton.addEventListener("change", function () {
+            console.log(e.parentElement.nextElementSibling); //should get me the preview container
+            console.log(
+              e.parentElement.nextElementSibling.querySelector(".preview_img")
+            );
+            console.log(realButton.files[0]);
+
+            //if file is chosen
+            if (realButton.value) {
+              //set the value of the custom text to be the same value
+              customText.innerHTML = realButton.value;
+              const reader = new FileReader();
+
+              reader.readAsDataURL(realButton.files[0]); // async call
+              reader.onload = () => {
+                //reader.result gonna contain the base 64 dataURL that represents the img; gonna be available once reader is fonish reading the file
+
+                e.parentElement.nextElementSibling.querySelector(
+                  ".copy_text"
+                ).style.height = "37px";
+                e.parentElement.nextElementSibling.querySelector(
+                  ".preview_img"
+                ).style.display = "block";
+                //will place the img as a bg for the selected button
+                e.parentElement.nextElementSibling.querySelector(
+                  ".preview_img"
+                ).style.backgroundImage = `url('${reader.result}')`;
+              };
+            } else {
+              customText.innerHTML = "No image chosen, yet";
+            }
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
