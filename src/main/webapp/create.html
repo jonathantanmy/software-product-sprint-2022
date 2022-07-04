@@ -159,7 +159,7 @@
     <script>
       $(document).ready(function () {
         // to load the first one
-        openFile();
+        openFile2();
         onInput();
         setNameOnInput();
         $("#addmorebtn").click(function () {
@@ -211,7 +211,10 @@
           termInputList[i].placeholder = "Term " + (i + 1);
         }
       }
-      function openFile() {
+
+      //this one initally checks through every class of .custom_img_input and takes care of its eventAction
+      //however, it won't be able to grab the last child as that will be newly loaded from the button
+      function openFile2() {
         console.log("button was clicked");
         //const realFileButton = document.querySelectorAll("upload_img_input");
         const customButton = document.querySelectorAll(".custom_img_input");
@@ -265,6 +268,57 @@
               customText.innerHTML = "No image chosen, yet";
             }
           });
+        });
+      }
+     
+      function openFile() {
+        console.log("button was clicked");
+        //const realFileButton = document.querySelectorAll("upload_img_input");
+        const last_child = document.querySelector(".duplicate-row:last-child");
+
+        const customButton = last_child.querySelector(".custom_img_input");
+        console.log(customButton);
+        console.log(customButton.length);
+
+        updateTermNum();
+
+        console.log("in for eachyyyy");
+        const realButton = last_child.querySelector(".upload_img_input");
+        const customText = last_child.querySelector(".custom_input_file_text");
+
+        customButton.addEventListener("click", function () {
+          //virtually click the real input type file = open file explorer
+          console.log("before click");
+          realButton.click();
+        });
+
+        //when a file is chosen(=="changes")
+        realButton.addEventListener("change", function () {
+          console.log(last_child.querySelector(".preview_img"));
+          console.log(realButton.files[0]);
+
+          //if file is chosen
+          if (realButton.value) {
+            //set the value of the custom text to be the same value
+            customText.innerHTML = realButton.value;
+            const reader = new FileReader();
+
+            reader.readAsDataURL(realButton.files[0]); // async call
+            reader.onload = () => {
+              //reader.result gonna contain the base 64 dataURL that represents the img; gonna be available once reader is fonish reading the file
+
+              last_child.querySelector(".copy_text").style.height = "37px";
+              last_child.querySelector(".preview_img").style.display = "block";
+              //will place the img as a bg for the selected button
+              last_child.querySelector(
+                ".preview_img"
+              ).style.backgroundImage = `url('${reader.result}')`;
+            };
+          } else {
+            customText.innerHTML = "No image chosen, yet";
+            last_child.querySelector(".preview_img").style.backgroundImage =
+              "none";
+          }
         });
       }
     </script>
