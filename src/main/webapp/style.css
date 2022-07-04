@@ -9,6 +9,9 @@
   body{
       background-color:#DAEAF1 ;
   }
+  a{
+      text-decoration: none;
+  }
   
   header {
     display: flex;
