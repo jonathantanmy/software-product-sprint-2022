@@ -1,0 +1,129 @@
+main.entire-login-container {
+    background-color: pink;
+    width: 500px;
+    margin: auto;
+    border-radius: 8px;
+outline: solid #dcdcdc;
+    outline-width: 1px;
+background-color: white;
+margin-top: 50px;
+
+}
+
+h1#website_name {
+    text-align: center;
+    font-family: emoji;
+}
+h2#login_header {
+    text-align: center;
+}
+p#login_message {
+    text-align: center;
+    width: 360px;
+    margin: auto;
+}
+#quickstart-verify-email{
+    display:none;
+}
+.login_inputs {
+    width: 360px;
+    margin: auto;
+    margin-top: 19px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+input[type=text], input[type=password] {
+    height: 40px;
+    width: 350px;
+    border-radius: 4px;
+    border: solid 1px #dcdcdc;
+    padding: 4px;
+    font-size: 14px;
+}#login_buttons {
+    width: 350px;
+    /* background: red; */
+    display: flex;
+    justify-content: space-between;
+}
+#quickstart-password-reset{
+    display:none;
+}
+.user-details-JSON{
+    display:none;
+}
+button#quickstart-sign-in, button#quickstart-sign-up, 
+button#quickstart-password-reset{
+    height: 40px;
+    width: 170px;
+    border-radius: 4px;
+    border: solid 1px #facfd4;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    background-color: #f9e1e1;
+    transition: 0.5s;
+    background-size: 200% auto;
+    box-shadow: 0 0 20px #eee;
+    display: center;
+    background-image: linear-gradient( to right, #f9e1e1 50%, #bfe9ff 10%, #ffcbd1 40% );
+    transition: 0.5s;
+}
+
+button#quickstart-password-reset{
+    width: 360px;
+}
+button#quickstart-sign-in:hover,button#quickstart-sign-up:hover,
+button#quickstart-password-reset:hover {
+    background-image: linear-gradient( to right, #ff6e7f 0%, #bfe9ff 51%, #ff6e7f 100% );
+    background-position: right center;
+    color: RIGHT;
+    color: #fff;
+    text-decoration: none;
+}
+
+
+h3 {
+  text-align: center;
+  /* background-color: white; */
+  color: #bac1c5;
+  position: relative;
+}
+
+h3:before {
+  content: "";
+  display: block;
+  margin-left: 70px;
+  width: 155px;
+  height: 2px;
+  background: #bac1c5;
+  position: absolute;
+  left: 0;
+  top: 50%;
+}
+
+h3:after {
+  content: "";
+  display: block;
+  margin-right: 70px;
+  width: 155px;
+  height: 2px;
+  background: #bac1c5;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+h4#forgot_password_text, h4#login_text {
+    font-size: 13px;
+    color: #522020;
+    text-align: center;
+}
+h4#login_text{
+    display:none;
+}
+.quickstart-user-details-container {
+    text-align: center;
+    font-size: 10px;
+}

@@ -71,7 +71,6 @@
     width: 33px;
     aspect-ratio: 1/1;
     display: flex;
-    display: none;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
@@ -94,8 +93,8 @@
     align-items: center;
     list-style: none;
     border-radius: 5px;
-    opacity: 0; /*makes the list unseeable but can still click*/
-    pointer-events: none; /*makes it can't click*/
+    opacity: 0;
+    visibility: visible;
     transform: translateY(-10px);
     transition: all 0.4s ease;
   }
@@ -122,19 +121,18 @@
     align-items: center;
     padding: 4px;
     white-space: nowrap;
+    cursor: pointer;
   }
   
   .signed_in_avatar li:hover {
     background-color: white;
   }
   
-  .signed_in_avatar button:hover {
-  }
-  
   /**focus=click ; + ul == do something to the elements below it which is the ul== addds styling on ul when focus on the avatar*/
   .signed_in_avatar button:focus + ul {
     opacity: 1;
     pointer-events: all;
+    visibility: visible;
     transform: translateY(10px);
   }
   
