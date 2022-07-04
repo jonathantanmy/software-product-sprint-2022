@@ -77,4 +77,44 @@ function loadTasks() {
     });
   }
 
+  
+/** Fetches tasks from the server and adds them to the DOM. */
+function loadHomeSet() {
+    fetch('/list-home-set').then(response => response.json()).then((sets) => {
+      const setListElement = document.querySelector(".grid");
+      sets.forEach((set) => {
+        setListElement.appendChild(createSetElement(set));
+      })
+    });
+  }
+
+
+  function createSetElement(set) {
+    const setElement = document.createElement("div");
+    setElement.className = "preview_box";
+  
+    const image = document.createElement("div");
+    image.className = "preview_img";
+
+    var hasImage = set.hasImage;
+
+
+   
+    const term = document.createElement("div");
+    term.className = "copy_text";
+    //or is it innerHTML
+    term.innerText = set.term;
+    
+    if(hasImage){
+        image.style.display="block";
+        image.style.backgroundImage= `url('${set.url}')`;
+        //if there is image, the text height shrink to 37px
+        term.style.height = "37px";
+    }
+  
+    setElement.appendChild(image);
+    setElement.appendChild(term);
+    return setElement;
+  }
+  
     
