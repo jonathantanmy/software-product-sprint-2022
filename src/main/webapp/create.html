@@ -173,6 +173,16 @@
         $(document).on("click", ".btn-remove", function () {
           if ($(".MutipleRecord .duplicate-row").length > 1) {
             $(this).parents(".duplicate-row").remove();
+            console.log("remove");
+            updateTermNum();
+          } else{ // if only one set left-- create another one and then remove one that way the page still has one and it won't [for some reason] submit the form
+            $(".MutipleRecord .duplicate-row:last-child")
+            .clone()
+            .appendTo(".grid");
+          openFile();
+          onInput();
+          $(this).parents(".duplicate-row").remove();
+            console.log("remove");
             updateTermNum();
           }
         });
