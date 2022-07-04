@@ -6,6 +6,9 @@
     display: flex;
     margin-right: 20px;
   }
+  body{
+      background-color:#DAEAF1 ;
+  }
   
   header {
     display: flex;
@@ -134,5 +137,8 @@
     pointer-events: all;
     visibility: visible;
     transform: translateY(10px);
+  }
+  .grid{
+      margin-top: 40px;
   }
   

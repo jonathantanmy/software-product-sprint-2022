@@ -29,9 +29,11 @@
 
             document.querySelector(".avatar").style.display="none";
             document.querySelector(".signed_in_avatar").style.display="block";
+            document.getElementById("create_link").href ="create.html";
           }else {
             document.querySelector(".avatar").style.display="flex";
             document.querySelector(".signed_in_avatar").style.display="none";
+            document.getElementById("create_link").href ="login.html";
           } ;
         });
       }
@@ -62,7 +64,7 @@
           <div class="navbar">
             <a href="#">TALKY TALKY</a>
             <a href="#">HOME</a>
-            <a href="create.html">CREATE</a>
+            <a href="" id="create_link">CREATE</a>
             <a href="#">ABOUT</a>
             <a href="WordStoringTest.html">WordStorer</a>
           </div>
@@ -85,7 +87,7 @@
             </div>
           </div>
         </header>
-        <div class="grid"></div>
+        <div class="grid" style="gap:60px;"></div>
         <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
         <script>
           var config = {

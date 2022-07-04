@@ -34,11 +34,13 @@
              userEmail.setAttribute("value", email);
     
         //----------------------------------------------------
-          document.querySelector(".avatar").style.display="none";
-          document.querySelector(".signed_in_avatar").style.display="block";
-        }else {
-          document.querySelector(".avatar").style.display="flex";
-          document.querySelector(".signed_in_avatar").style.display="none";
+        document.querySelector(".avatar").style.display="none";
+            document.querySelector(".signed_in_avatar").style.display="block";
+            document.getElementById("create_link").href ="create.html";
+          }else {
+            document.querySelector(".avatar").style.display="flex";
+            document.querySelector(".signed_in_avatar").style.display="none";
+            document.getElementById("create_link").href ="login.html";
         } ;
       });
     }
@@ -68,7 +70,7 @@
         <div class="navbar">
           <a href="index.html">TALKY TALKY</a>
           <a href="index.html">HOME</a>
-          <a href="create.html">CREATE</a>
+          <a href="create.html" id="create_link">CREATE</a>
           <a href="#">ABOUT</a>
           <a href="WordStoringTest.html">WordStorer</a>
         </div>
