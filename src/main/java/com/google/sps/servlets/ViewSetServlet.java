@@ -21,7 +21,11 @@ import com.google.cloud.datastore.Query;
 import com.google.cloud.datastore.QueryResults;
 import com.google.cloud.datastore.StructuredQuery.OrderBy;
 import com.google.gson.Gson;
-import com.google.sps.data.Task;
+import com.google.sps.data.Set;
+
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,31 +35,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /** Servlet responsible for listing tasks. */
-@WebServlet("/list-tasks")
-public class ListTasksServlet extends HttpServlet {
+@WebServlet("/list-set")
+public class ViewSetServlet extends HttpServlet {
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      
+String kind = Jsoup.clean(request.getParameter("kind"), Whitelist.none());
     Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
     Query<Entity> query =
-        Query.newEntityQueryBuilder().setKind("Task").setOrderBy(OrderBy.desc("timestamp")).build();
+        Query.newEntityQueryBuilder().setKind(kind).setOrderBy(OrderBy.desc("timestamp")).build();
     QueryResults<Entity> results = datastore.run(query);
 
-    List<Task> tasks = new ArrayList<>();
+    List<Set> sets = new ArrayList<>();
     while (results.hasNext()) {
       Entity entity = results.next();
 
       long id = entity.getKey().getId();
-      String title = entity.getString("title");
+      Boolean hasImage =entity.getBoolean("hasImage");
+      String imageName = entity.getString("imageName");
+       String setname = entity.getString("setname");
+       String term = entity.getString("term");
       long timestamp = entity.getLong("timestamp");
+      String url = entity.getString("url");
 
-      Task task = new Task(id, title, timestamp);
-      tasks.add(task);
+      Set set = new Set(id, hasImage, imageName, setname, term, timestamp, url);
+      sets.add(set);
     }
 
     Gson gson = new Gson();
 
     response.setContentType("application/json;");
-    response.getWriter().println(gson.toJson(tasks));
+    response.getWriter().write(gson.toJson(sets));
   }
 }

@@ -4,10 +4,12 @@
     <meta charset="UTF-8" />
     <title>TEAM-23 PROJECT</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="search.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     <script src="script.js"></script>
     <script src="/__/firebase/9.8.3/firebase-app-compat.js"></script>
@@ -44,7 +46,7 @@
   </script>
   </head>
   
-<body onload="loadHomeSet();initApp()">
+<body onload="initApp()">
     <head>
         <title>Create</title>
         <meta charset="utf-8" />
@@ -62,8 +64,8 @@
       <body>
         <header>
           <div class="navbar">
-            <a href="#">TALKY TALKY</a>
-            <a href="#">HOME</a>
+            <a href="index.html">TALKY TALKY</a>
+            <a href="index.html">HOME</a>
             <a href="create.html" id="create_link">CREATE</a>
             <a href="about.html">ABOUT</a>
           </div>
@@ -86,7 +88,46 @@
             </div>
           </div>
         </header>
-        <div class="grid" style="gap:60px;"></div>
+       
+        <div class="search_results"></div>
+        <script>
+            const params = new URLSearchParams(window.location.search); //gets the current url
+            var search = params.get('search'); // gets the value of the 'search' key
+            console.log("the search =" + search);
+           
+            $(document).ready(function(){
+                
+                $.ajax({
+                url:"/search-results",
+                method:"POST",
+                dataType:'json',
+                data:{ 
+                
+                    search:search,
+                
+                },
+                cache:false,
+                success:function(data)
+                {
+                    console.log("in success?");
+                    console.log(data);
+                    console.log("json length is: " + data.length);
+                    console.log(data[0]);
+                    const setListElement = document.querySelector(".search_results");
+                    for(let i = 0; i < data.length; i++) {
+                        console.log("in foor loop");
+                        setListElement.appendChild(createSearchResult(data[i]));
+                    }
+                }
+                });
+                
+
+    
+            });
+        </script>
+
+          
+        </script> 
         <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
         <script>
           var config = {
