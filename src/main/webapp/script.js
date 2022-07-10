@@ -89,6 +89,7 @@ function loadHomeSet() {
   }
 
 
+  //creates all the elements to store the terms 
   function createSetElement(set) {
     const setElement = document.createElement("div");
     setElement.className = "preview_box";
@@ -113,9 +114,20 @@ function loadHomeSet() {
         //if there is image, the text height shrink to 37px
         term.style.height = "37px";
     }
-  
+    
+    // not adding the controls attribute to the audio element -> so don't needa hide it - is already has display none
+    const audio = document.createElement("audio");
+    //adds the source of the audio file -- rabiat's website
+    audio.setAttribute('src', "http://rsadiq-sps-summer22.appspot.com/text-speech?textss=" + set.term);
     setElement.appendChild(image);
     setElement.appendChild(term);
+    setElement.appendChild(audio);
+
+    //when click on element-- should play the sound 
+    setElement.addEventListener('click', function() {
+        audio.play();
+    }, false);
+
     return setElement;
   }
   
