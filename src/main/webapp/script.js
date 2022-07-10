@@ -93,6 +93,7 @@ function loadHomeSet() {
     const setElement = document.createElement("div");
     setElement.className = "preview_box";
   
+    
     const image = document.createElement("div");
     image.className = "preview_img";
 
@@ -104,6 +105,7 @@ function loadHomeSet() {
     term.className = "copy_text";
     //or is it innerHTML
     term.innerText = set.term;
+    
     
     if(hasImage){
         image.style.display="block";

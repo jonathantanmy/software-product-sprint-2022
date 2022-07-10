@@ -87,7 +87,14 @@
     <artifactId>google-cloud-texttospeech</artifactId>
     <version>2.3.1</version>
   </dependency>
+
+
+
+
+
 </dependencies>
+
+
   <build>
     <plugins>
       <!-- Copy static resources like html files into the output jar file. -->

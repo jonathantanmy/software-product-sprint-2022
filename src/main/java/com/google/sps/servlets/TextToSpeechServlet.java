@@ -1,8 +1,18 @@
+package com.google.sps.servlets;
 
-package main.java.com.google.sps.servlets;
+// import java.io.FileOutputStream;
+import java.io.IOException;
+// import java.io.OutputStream;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
  // Imports the Google Cloud client library
 import com.google.cloud.texttospeech.v1.AudioConfig;
 import com.google.cloud.texttospeech.v1.AudioEncoding;
+import com.google.cloud.texttospeech.v1.SsmlVoiceGender;
 import com.google.cloud.texttospeech.v1.SsmlVoiceGender;
 import com.google.cloud.texttospeech.v1.SynthesisInput;
 import com.google.cloud.texttospeech.v1.SynthesizeSpeechResponse;
@@ -13,14 +23,6 @@ import com.google.protobuf.ByteString;
 import io.grpc.LoadBalancerRegistry;
 import io.grpc.internal.PickFirstLoadBalancerProvider;
 
-// import java.io.FileOutputStream;
-import java.io.IOException;
-// import java.io.OutputStream;
-
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 // import com.google.cloud.internal.PickFirstLoadBalancer;
 
@@ -33,16 +35,16 @@ import javax.servlet.http.HttpServletResponse;
 
   /** Demonstrates using the Text-to-Speech API. */
   @WebServlet("/text-speech")
-  public class textspeech  extends HttpServlet {
+  public class TextToSpeechServlet  extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    LoadBalancerRegistry.getDefaultRegistry().register(new PickFirstLoadBalancerProvider());
-    String originalText2 = request.getParameter("textss");
+     LoadBalancerRegistry.getDefaultRegistry().register(new PickFirstLoadBalancerProvider());
+   
     // Instantiates a client
     try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
       // Set the text input to be synthesized
-      SynthesisInput input = SynthesisInput.newBuilder().setText(originalText2).build();
+      SynthesisInput input = SynthesisInput.newBuilder().setText("Talky Talky testing").build();
     //   setText("textss").build();
 
       // Build the voice request, select the language code ("en-US") and the ssml voice gender
