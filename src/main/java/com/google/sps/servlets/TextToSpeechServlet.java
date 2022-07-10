@@ -9,10 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
- // Imports the Google Cloud client library
+// Imports the Google Cloud client library
 import com.google.cloud.texttospeech.v1.AudioConfig;
 import com.google.cloud.texttospeech.v1.AudioEncoding;
-import com.google.cloud.texttospeech.v1.SsmlVoiceGender;
 import com.google.cloud.texttospeech.v1.SsmlVoiceGender;
 import com.google.cloud.texttospeech.v1.SynthesisInput;
 import com.google.cloud.texttospeech.v1.SynthesizeSpeechResponse;
@@ -20,8 +19,9 @@ import com.google.cloud.texttospeech.v1.TextToSpeechClient;
 import com.google.cloud.texttospeech.v1.VoiceSelectionParams;
 import com.google.protobuf.ByteString;
 
-import io.grpc.LoadBalancerRegistry;
-import io.grpc.internal.PickFirstLoadBalancerProvider;
+// import io.grpc.LoadBalancerRegistry;
+// import io.grpc.internal.PickFirstLoadBalancerProvider;
+// import io.grpc.*;
 
 
 // import com.google.cloud.internal.PickFirstLoadBalancer;
@@ -39,7 +39,7 @@ import io.grpc.internal.PickFirstLoadBalancerProvider;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-     LoadBalancerRegistry.getDefaultRegistry().register(new PickFirstLoadBalancerProvider());
+    //  LoadBalancerRegistry.getDefaultRegistry().register(new PickFirstLoadBalancerProvider());
    
     // Instantiates a client
     try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
