@@ -1,0 +1,44 @@
+.searchResult_box {
+    aspect-ratio: 21/9;
+    height: 142px;
+    background: #f6f9ff;
+    border-radius: 10px;
+    border: 1px solid #c1c3c7;
+    margin: auto;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    cursor: pointer;
+}
+
+.search_results {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 334px);
+    gap: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+p.searchResult_creator::before {
+    content: "Creator: ";
+    font-family: fangsong;
+}
+
+p.searchResult_termAmount::before {
+    content: "Term Amount: ";
+    font-family: fangsong;
+}
+
+.creatorHeader {
+    width: fit-content;
+    margin: auto;
+    margin-top: 20px;
+}
+hr {
+    width: 85%;
+    margin: auto;
+    margin-top: 30px;
+}

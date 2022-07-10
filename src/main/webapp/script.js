@@ -118,3 +118,37 @@ function loadHomeSet() {
   }
   
     
+  
+  // loads the search result into the search page
+  function createSearchResult(set) {
+    const searchResult = document.createElement("div");
+    searchResult.className = "searchResult_box";
+  
+    const title = document.createElement("h2");
+    title.className = "searchResult_title";
+    title.innerText = set.setname; //gets the setname
+
+    const creator = document.createElement("p");
+    creator.className = "searchResult_creator";
+    creator.innerText = set.creator;
+
+    const termAmount = document.createElement("p");
+    termAmount.className = "searchResult_termAmount";
+    termAmount.innerText = set.term_amount;
+
+    const link = document.createElement("a");
+    link.className = "setLink"
+    link.href = "viewSet.html?kind="+ set.set_database +"&C="+ set.creator + "&A="+ set.term_amount +"&T="+set.setname;
+    console.log(link.href);
+    searchResult.appendChild(title);
+    searchResult.appendChild(creator);
+    searchResult.appendChild(termAmount);
+    searchResult.appendChild(link);
+
+    //makes the whole element a link=> when clicked should redirect to a page that will show all the terms
+    searchResult.addEventListener('click', function() {
+        location.href = link.href
+    }, false);
+    return searchResult;
+  }
+  

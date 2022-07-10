@@ -15,15 +15,23 @@
 package com.google.sps.data;
 
 /** An item on a todo list. */
-public final class Task {
+public final class SetOverview {
 
   private final long id;
-  private final String title;
+  private final String creator;
+  
+  private final String set_database;
+  private final String setname;
+  private final int term_amount;
   private final long timestamp;
+  
 
-  public Task(long id, String title, long timestamp) {
+  public SetOverview(long id, String creator, String set_database,String setname, int term_amount,  long timestamp) {
     this.id = id;
-    this.title = title;
+    this.creator = creator;
+    this.set_database = set_database;
+    this.setname = setname;
+    this.term_amount = term_amount;
     this.timestamp = timestamp;
   }
 }
