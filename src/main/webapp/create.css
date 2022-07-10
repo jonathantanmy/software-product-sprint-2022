@@ -61,8 +61,8 @@ button.btn-remove {
   align-items: center;
   border: 1px solid #f2d7d9;
   border-radius: 5px;
-
   background-color: #ffe6e6;
+  cursor: pointer;
 }
 
 /*starts off with no img*/
@@ -176,3 +176,4 @@ button#set_submit_button:hover {
   flex-direction: column;
   align-items: center;
 }
+
