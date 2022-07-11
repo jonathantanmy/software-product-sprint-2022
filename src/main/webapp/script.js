@@ -94,6 +94,7 @@ function loadHomeSet() {
     const setElement = document.createElement("div");
     setElement.className = "preview_box";
   
+    
     const image = document.createElement("div");
     image.className = "preview_img";
 
@@ -106,6 +107,7 @@ function loadHomeSet() {
     //or is it innerHTML
     term.innerText = set.term;
     
+    
     if(hasImage){
         image.style.display="block";
         image.style.backgroundImage= `url('${set.url}')`;
@@ -116,7 +118,7 @@ function loadHomeSet() {
     // not adding the controls attribute to the audio element -> so don't needa hide it - is already has display none
     const audio = document.createElement("audio");
     //adds the source of the audio file -- rabiat's website
-    audio.setAttribute('src', "http://rsadiq-sps-summer22.appspot.com/text-speech?textss=" + set.term);
+    audio.setAttribute('src', "https://rsadiq-sps-summer22.appspot.com/text-speech?textss=" + set.term);
     setElement.appendChild(image);
     setElement.appendChild(term);
     setElement.appendChild(audio);
