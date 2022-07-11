@@ -312,8 +312,17 @@
                   ".preview_img"
                 ).style.backgroundImage = `url('${reader.result}')`;
               };
-            } else {
+            } else { // if no image-- set the display back to text in middle of the block [original display]
               customText.innerHTML = "No image chosen, yet";
+              e.parentElement.nextElementSibling.querySelector(
+                  ".preview_img"
+                ).style.backgroundImage ="none";
+              e.parentElement.nextElementSibling.querySelector(
+                  ".preview_img"
+                ).style.display = "none";
+              e.parentElement.nextElementSibling.querySelector(
+                  ".copy_text"
+                ).style.height = "187px";
             }
           });
         });
@@ -367,6 +376,8 @@
             customText.innerHTML = "No image chosen, yet";
             last_child.querySelector(".preview_img").style.backgroundImage =
               "none";
+              last_child.querySelector(".preview_img").style.display = "none";
+              last_child.querySelector(".copy_text").style.height = "187px";
           }
         });
       }
