@@ -89,6 +89,9 @@
     position: relative;
     display: none;
   }
+  i.fa.fa-user {
+    font-size: 23px;
+}
   .signed_in_avatar ul {
     position: absolute;
     left: -50%;
