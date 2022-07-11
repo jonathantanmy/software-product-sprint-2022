@@ -248,6 +248,18 @@
         }
       }
 
+      //clears all the elements in the create set div[as it clones the last one to add]
+      function clearLastSet(element){
+        element.querySelector(".term_input").value=""; //clears the input for the term
+        element.querySelector(".upload_img_input").value="";//clears the image file in the file input
+        element.querySelector(".custom_input_file_text").innerText="No image chosen, yet"; //set msg to original
+        element.querySelector(".preview_img").style.backgroundImage="none"; //remove the bg image if there is one
+        element.querySelector(".preview_img").style.display="none";
+        element.querySelector(".copy_text").style.height = "187px"; 
+        element.querySelector(".copy_text").innerText=""; //clears the text
+
+      }
+
       //this one initally checks through every class of .custom_img_input and takes care of its eventAction
       //however, it won't be able to grab the last child as that will be newly loaded from the button
       function openFile2() {
@@ -317,6 +329,7 @@
         console.log(customButton.length);
 
         updateTermNum();
+        clearLastSet(last_child);        
 
         console.log("in for eachyyyy");
         const realButton = last_child.querySelector(".upload_img_input");
