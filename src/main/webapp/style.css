@@ -71,6 +71,9 @@
     border-radius: 50%;
     position: relative;
     border: 1px solid #746a6a;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .avatar {
     color: #7f7575;
@@ -81,9 +84,6 @@
     justify-content: center;
     border-radius: 50%;
     border: 1px solid #746a6a;
-  }
-  .fa-user {
-    font-size: 25px;
   }
   .signed_in_avatar {
     position: relative;

@@ -28,9 +28,9 @@
           if (user) {// User is signed in.
               console.log("there is a user");
             
-
-            document.querySelector(".avatar").style.display="none";
+              document.querySelector(".avatar").style.display="none";
             document.querySelector(".signed_in_avatar").style.display="block";
+            document.querySelector(".signed_in_avatar").style.backgroundImage= `url('${user.photoURL}')`;
             document.getElementById("create_link").href ="create.html";
           }else {
             document.querySelector(".avatar").style.display="flex";
@@ -79,7 +79,7 @@
             </div>
             <div class="avatar"><a href="login.html"><i class="fa fa-user"></i></a></div>
             <div class="signed_in_avatar">
-              <button><i class="fa fa-user"></i></button>
+              <button></button>
               <ul>
                 <li><a href="#">My Sets</a></li>
                 <li><a href="#">Settings</a></li>
