@@ -95,6 +95,7 @@
     <div class="create_container">
       <div class="row">
         <div class="create_top_section">
+            <p id="create_error_messages"></p>
           <input
             type="text"
             id="set_name"
@@ -109,7 +110,7 @@
         </div>
 
         <div class="set_container">
-          <form action="/upload" class="MutipleRecord" method="POST" enctype="multipart/form-data">
+          <form action="/upload" class="MutipleRecord" method="POST" onsubmit="event.preventDefault();" enctype="multipart/form-data">
             <input type="hidden" name ="setName" id="hidden_set_name" />
             <input type="hidden" name = "user" id="user" />
             <div class="grid">
@@ -149,7 +150,8 @@
                 </div>
               </div>
             </div>
-            <button type="submit" id="set_submit_button">SUBMIT</button>
+           <button type="submit" onClick="submitForm()" id="set_submit_button">SUBMIT</button>
+           
           </form>
         </div>
       </div>
@@ -189,6 +191,21 @@
       });
     </script>
     <script>
+        //error handling - action to do when user click the submit button
+        function submitForm(){
+            console.log("in the submitForm funtion")
+            const submit = document.getElementById(".set_submit_button");
+           // submit.preventDefault()
+            var title = document.getElementById("set_name").value==""; //true/false if there a title value
+            if(title){// if title is empty 
+                document.getElementById("create_error_messages").innerText = "PLEASE ADD A SET TITLE";
+            } else { // if the title is filled 
+               alert("good to submit");
+                
+
+            }
+
+        }
       function setNameOnInput() {
         console.log("set Name");
         const set_name = document.getElementById("set_name");
