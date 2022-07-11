@@ -194,18 +194,33 @@
         //error handling - action to do when user click the submit button
         function submitForm(){
             console.log("in the submitForm funtion")
-            const submit = document.getElementById(".set_submit_button");
+            var canSubmit = true;
+            const submitForm= document.querySelector(".MutipleRecord");
            // submit.preventDefault()
+           const termList = document.querySelectorAll(".term_input");
             var title = document.getElementById("set_name").value==""; //true/false if there a title value
             if(title){// if title is empty 
                 document.getElementById("create_error_messages").innerText = "PLEASE ADD A SET TITLE";
             } else { // if the title is filled 
-               alert("good to submit");
+                termList.forEach((e) => {
+                    var term = document.querySelector(".term_input").value=="";
+                    if (term) { //if true, means empty input 
+                        canSubmit=false;
+                        document.getElementById("create_error_messages").innerText = "ALL CARDS MUST HAVE A TERM OR REMOVE UNUSED CARDS";
+                    }        
+       
+        });
+
+        if(canSubmit){
+            submitForm.submit(); //submits the form
+        }
                 
 
             }
 
         }
+
+
       function setNameOnInput() {
         console.log("set Name");
         const set_name = document.getElementById("set_name");
