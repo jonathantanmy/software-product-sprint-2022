@@ -24,14 +24,16 @@
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {// User is signed in.
             console.log("create.html there is a user");
-            var email = user.email;
-          console.log(email);
+            var displayName = user.displayName;
+          console.log(displayName);
+          console.log("the display name of the current user is: "+ displayName);
           //-----------------------------------------------
               //this it for the form --to include the user 
               
-             const userEmail = document.getElementById("user");
+             const name = document.getElementById("user");
             
-             userEmail.setAttribute("value", email);
+             name.setAttribute("value", displayName);
+            
     
         //----------------------------------------------------
         document.querySelector(".avatar").style.display="none";

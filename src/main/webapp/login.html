@@ -40,7 +40,10 @@ limitations under the License.
   <script src="/__/firebase/init.js"></script>
 
   <script type="text/javascript">
-
+        //to keep track of new users
+        var justCreatedAccount = false;
+        //the name of the new user 
+        var name = "";
     /**
      * Handles the sign in button press.
      */
@@ -79,8 +82,15 @@ limitations under the License.
      * Handles the sign up button press.
      */
     function handleSignUp() {
-      var email = document.getElementById('email').value;
+        name = document.getElementById('user_name').value;
+        console.log(name)
+        var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
+
+      if(name ==""){ // if the name input is empty
+        alert('Please enter a name.');
+        return;
+      }
       if (email.length < 4) {
         alert('Please enter an email address.');
         return;
@@ -101,6 +111,7 @@ limitations under the License.
         }
         console.log(error);
       });
+      justCreatedAccount = true;
     }
 
     /**
@@ -142,6 +153,28 @@ limitations under the License.
         document.getElementById('quickstart-verify-email').disabled = true;
         if (user) {
           // User is signed in.
+          if ((firebase.auth().currentUser) && justCreatedAccount) {
+          console.log("should update the name now ");
+          console.log("global name variable is still" + name);
+          const user = firebase.auth().currentUser;
+
+            user.updateProfile({
+            displayName: name,
+            photoURL: "https://storage.googleapis.com/tliu-sps-summer22.appspot.com/default_profile_pic"
+            }).then(() => {
+            console.log("updated successfully");
+            }).catch((error) => {
+            // An error occurred
+            console.log(error);
+            // ...
+            });  
+      } else {
+          console.log("shouldn't be able to update the name here ");
+      }
+          
+
+
+          
 
           //redirect to index page
           window.location.replace("index.html");
@@ -150,7 +183,9 @@ limitations under the License.
 
 
           var displayName = user.displayName;
+          console.log(displayName);
           var email = user.email;
+          console.log(email);
           var emailVerified = user.emailVerified;
           var photoURL = user.photoURL;
           var isAnonymous = user.isAnonymous;
@@ -194,8 +229,9 @@ limitations under the License.
             <h2 id="login_header">Login</h2>
         </div>
         <div class="login_inputs">
-            <p id="login_message">Enter an email and password below and either sign in to an existing account or sign up</p>
-
+            <p style="cursor: pointer"
+            onclick="create_account()" id="login_message">create an account</p>
+            <input class="mdl-textfield__input"  type="text" id="user_name" name="name" placeholder="Name..."/>
           <input class="mdl-textfield__input"  type="text" id="email" name="email" placeholder="Email..."/>
    
           <input class="mdl-textfield__input"  type="password" id="password" name="password" placeholder="Password..."/>
@@ -212,7 +248,11 @@ limitations under the License.
         <div class="lineOr">
             <h3><span style="font-size: 25px"> OR </span></h3>
           </div>
-    
+          <h4
+          id="create_acount"
+          style="cursor: pointer"
+          onclick="create_account()"
+        > Create an Account  </h4>
           <h4
             id="forgot_password_text"
             style="cursor: pointer"
@@ -238,6 +278,14 @@ limitations under the License.
   </main>
 
   <script>
+      
+      function create_account(){
+          document.getElementById("login_header").innerText="Sign Up";
+          document.getElementById("user_name").style.display="block";
+          document.getElementById("quickstart-sign-in").style.display="none";
+          document.getElementById("quickstart-sign-up").style.display="block";
+          document.getElementById("user_name").style.display="block";
+      }
     function forgot_password() {
       document.getElementById("password").style.display = "none";
       document.getElementById("quickstart-sign-in").style.display = "none";
@@ -250,7 +298,7 @@ limitations under the License.
     function return_to_login() {
       document.getElementById("password").style.display = "block";
       document.getElementById("quickstart-sign-in").style.display = "block";
-      document.getElementById("quickstart-sign-up").style.display = "block";
+      document.getElementById("quickstart-sign-up").style.display = "none";
       document.getElementById("quickstart-password-reset").style.display =
         "none";
       document.getElementById("forgot_password_text").style.display = "block";
