@@ -64,8 +64,9 @@ String search = Jsoup.clean(request.getParameter("search"), Whitelist.none());
        String set_database = entity.getString("set_database");
       long timestamp = entity.getLong("timestamp");
       int  term_amount= (int) entity.getLong("term_amount");
+      String uid = entity.getString("uid");
 
-      SetOverview set = new SetOverview( id, creator, set_database, setname,  term_amount,  timestamp);
+      SetOverview set = new SetOverview( id, creator, set_database, setname,  term_amount,  timestamp, uid);
       sets.add(set);
     }
 

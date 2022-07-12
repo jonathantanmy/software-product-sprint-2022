@@ -25,6 +25,7 @@
         if (user) {// User is signed in.
             console.log("create.html there is a user");
             var displayName = user.displayName;
+            var uid = user.uid;
           console.log(displayName);
           console.log("the display name of the current user is: "+ displayName);
           //-----------------------------------------------
@@ -33,6 +34,10 @@
              const name = document.getElementById("user");
             
              name.setAttribute("value", displayName);
+
+             const userUID = document.getElementById("uid");
+            
+             userUID.setAttribute("value", uid);
             
     
         //----------------------------------------------------
@@ -115,6 +120,7 @@
 
         <div class="set_container">
           <form action="/upload" class="MutipleRecord" method="POST" onsubmit="event.preventDefault();" enctype="multipart/form-data">
+            <input type="hidden" name ="uid" id="uid" />
             <input type="hidden" name ="setName" id="hidden_set_name" />
             <input type="hidden" name = "user" id="user" />
             <div class="grid">
