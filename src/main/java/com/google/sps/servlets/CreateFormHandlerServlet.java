@@ -70,6 +70,7 @@ public class CreateFormHandlerServlet extends HttpServlet {
 String setName = Jsoup.clean(request.getParameter("setName"), Whitelist.none());
 String setNameKind=setName + System.currentTimeMillis();
 String user = Jsoup.clean(request.getParameter("user"), Whitelist.none());
+String uid = Jsoup.clean(request.getParameter("uid"), Whitelist.none());
 System.out.println(setNameKind);
 
 Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
@@ -82,6 +83,7 @@ FullEntity taskEntity =
         .set("creator", user)
         .set("term_amount", message.length)
         .set("timestamp", timestamp)
+        .set("uid", uid)
         .build();
 datastore.put(taskEntity);
 //-------------------------------------------------------------------------------

@@ -19,19 +19,20 @@ public final class SetOverview {
 
   private final long id;
   private final String creator;
-  
   private final String set_database;
   private final String setname;
   private final int term_amount;
   private final long timestamp;
+  private final String uid;
   
 
-  public SetOverview(long id, String creator, String set_database,String setname, int term_amount,  long timestamp) {
+  public SetOverview(long id, String creator, String set_database,String setname, int term_amount,  long timestamp, String uid) {
     this.id = id;
     this.creator = creator;
     this.set_database = set_database;
     this.setname = setname;
     this.term_amount = term_amount;
     this.timestamp = timestamp;
+    this.uid = uid;
   }
 }
