@@ -45,13 +45,27 @@ public class searchResultsServlet extends HttpServlet {
     
 String search = Jsoup.clean(request.getParameter("search"), Whitelist.none());
     Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
-    Query<Entity> query =
-    Query.newEntityQueryBuilder()
+    Query<Entity> query;
+    
+
+        if(search.isEmpty()){
+        query=  Query.newEntityQueryBuilder()
         .setKind("Sets")
-        .setFilter(
-            CompositeFilter.and(
-                PropertyFilter.le("setname", search.toLowerCase()), PropertyFilter.ge("setname", search.toUpperCase())))
+        .setOrderBy(OrderBy.asc("setname"))
         .build();
+        
+        
+        }
+        else{
+            query=  Query.newEntityQueryBuilder()
+            .setKind("Sets")
+            .setFilter(
+            CompositeFilter.and(
+            PropertyFilter.le("setname", search.toLowerCase()), PropertyFilter.ge("setname", search.toUpperCase())))
+             .build();
+            
+        } 
+       
     QueryResults<Entity> results = datastore.run(query);
 
     List<SetOverview> sets = new ArrayList<>();
