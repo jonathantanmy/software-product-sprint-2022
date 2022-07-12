@@ -24,18 +24,22 @@
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {// User is signed in.
             console.log("create.html there is a user");
-            var email = user.email;
-          console.log(email);
+            var displayName = user.displayName;
+          console.log(displayName);
+          console.log("the display name of the current user is: "+ displayName);
           //-----------------------------------------------
               //this it for the form --to include the user 
               
-             const userEmail = document.getElementById("user");
+             const name = document.getElementById("user");
             
-             userEmail.setAttribute("value", email);
+             name.setAttribute("value", displayName);
+            
     
         //----------------------------------------------------
+      
         document.querySelector(".avatar").style.display="none";
             document.querySelector(".signed_in_avatar").style.display="block";
+            document.querySelector(".signed_in_avatar").style.backgroundImage= `url('${user.photoURL}')`;
             document.getElementById("create_link").href ="create.html";
           }else {
             document.querySelector(".avatar").style.display="flex";
@@ -83,7 +87,7 @@
           </div>
           <div class="avatar"><a href="login.html"><i class="fa fa-user"></i></a></div>
           <div class="signed_in_avatar">
-            <button><i class="fa fa-user"></i></button>
+            <button></button>
             <ul>
               <li><a href="#">My Sets</a></li>
               <li><a href="#">Settings</a></li>
@@ -95,6 +99,7 @@
     <div class="create_container">
       <div class="row">
         <div class="create_top_section">
+            <p id="create_error_messages"></p>
           <input
             type="text"
             id="set_name"
@@ -109,7 +114,7 @@
         </div>
 
         <div class="set_container">
-          <form action="/upload" class="MutipleRecord" method="POST" enctype="multipart/form-data">
+          <form action="/upload" class="MutipleRecord" method="POST" onsubmit="event.preventDefault();" enctype="multipart/form-data">
             <input type="hidden" name ="setName" id="hidden_set_name" />
             <input type="hidden" name = "user" id="user" />
             <div class="grid">
@@ -149,7 +154,8 @@
                 </div>
               </div>
             </div>
-            <button type="submit" id="set_submit_button">SUBMIT</button>
+           <button type="submit" onClick="submitForm()" id="set_submit_button">SUBMIT</button>
+           
           </form>
         </div>
       </div>
@@ -189,6 +195,36 @@
       });
     </script>
     <script>
+        //error handling - action to do when user click the submit button
+        function submitForm(){
+            console.log("in the submitForm funtion")
+            var canSubmit = true;
+            const submitForm= document.querySelector(".MutipleRecord");
+           // submit.preventDefault()
+           const termList = document.querySelectorAll(".term_input");
+            var title = document.getElementById("set_name").value==""; //true/false if there a title value
+            if(title){// if title is empty 
+                document.getElementById("create_error_messages").innerText = "PLEASE ADD A SET TITLE";
+            } else { // if the title is filled 
+                termList.forEach((e) => {
+                    var term = document.querySelector(".term_input").value=="";
+                    if (term) { //if true, means empty input 
+                        canSubmit=false;
+                        document.getElementById("create_error_messages").innerText = "ALL CARDS MUST HAVE A TERM OR REMOVE UNUSED CARDS";
+                    }        
+       
+        });
+
+        if(canSubmit){
+            submitForm.submit(); //submits the form
+        }
+                
+
+            }
+
+        }
+
+
       function setNameOnInput() {
         console.log("set Name");
         const set_name = document.getElementById("set_name");
@@ -248,6 +284,18 @@
         }
       }
 
+      //clears all the elements in the create set div[as it clones the last one to add]
+      function clearLastSet(element){
+        element.querySelector(".term_input").value=""; //clears the input for the term
+        element.querySelector(".upload_img_input").value="";//clears the image file in the file input
+        element.querySelector(".custom_input_file_text").innerText="No image chosen, yet"; //set msg to original
+        element.querySelector(".preview_img").style.backgroundImage="none"; //remove the bg image if there is one
+        element.querySelector(".preview_img").style.display="none";
+        element.querySelector(".copy_text").style.height = "187px"; 
+        element.querySelector(".copy_text").innerText=""; //clears the text
+
+      }
+
       //this one initally checks through every class of .custom_img_input and takes care of its eventAction
       //however, it won't be able to grab the last child as that will be newly loaded from the button
       function openFile2() {
@@ -300,8 +348,17 @@
                   ".preview_img"
                 ).style.backgroundImage = `url('${reader.result}')`;
               };
-            } else {
+            } else { // if no image-- set the display back to text in middle of the block [original display]
               customText.innerHTML = "No image chosen, yet";
+              e.parentElement.nextElementSibling.querySelector(
+                  ".preview_img"
+                ).style.backgroundImage ="none";
+              e.parentElement.nextElementSibling.querySelector(
+                  ".preview_img"
+                ).style.display = "none";
+              e.parentElement.nextElementSibling.querySelector(
+                  ".copy_text"
+                ).style.height = "187px";
             }
           });
         });
@@ -317,6 +374,7 @@
         console.log(customButton.length);
 
         updateTermNum();
+        clearLastSet(last_child);        
 
         console.log("in for eachyyyy");
         const realButton = last_child.querySelector(".upload_img_input");
@@ -354,6 +412,8 @@
             customText.innerHTML = "No image chosen, yet";
             last_child.querySelector(".preview_img").style.backgroundImage =
               "none";
+              last_child.querySelector(".preview_img").style.display = "none";
+              last_child.querySelector(".copy_text").style.height = "187px";
           }
         });
       }

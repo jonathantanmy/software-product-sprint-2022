@@ -130,6 +130,7 @@ input.term_input {
   gap: 10px;
   justify-content: center;
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 .create_container {
   margin: 20px;

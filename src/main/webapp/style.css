@@ -71,6 +71,9 @@
     border-radius: 50%;
     position: relative;
     border: 1px solid #746a6a;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .avatar {
     color: #7f7575;
@@ -82,13 +85,13 @@
     border-radius: 50%;
     border: 1px solid #746a6a;
   }
-  .fa-user {
-    font-size: 25px;
-  }
   .signed_in_avatar {
     position: relative;
     display: none;
   }
+  i.fa.fa-user {
+    font-size: 23px;
+}
   .signed_in_avatar ul {
     position: absolute;
     left: -50%;
@@ -141,6 +144,4 @@
     visibility: visible;
     transform: translateY(10px);
   }
-  .grid{
-      margin-top: 40px;
-  }
+  

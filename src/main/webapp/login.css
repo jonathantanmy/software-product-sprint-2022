@@ -24,6 +24,11 @@ p#login_message {
     width: 360px;
     margin: auto;
 }
+
+p#login_message::before{
+    content:"Login with email and password or "
+}
+
 #quickstart-verify-email{
     display:none;
 }
@@ -42,11 +47,6 @@ input[type=text], input[type=password] {
     border: solid 1px #dcdcdc;
     padding: 4px;
     font-size: 14px;
-}#login_buttons {
-    width: 350px;
-    /* background: red; */
-    display: flex;
-    justify-content: space-between;
 }
 #quickstart-password-reset{
     display:none;
@@ -57,7 +57,7 @@ input[type=text], input[type=password] {
 button#quickstart-sign-in, button#quickstart-sign-up, 
 button#quickstart-password-reset{
     height: 40px;
-    width: 170px;
+    width: 100%;
     border-radius: 4px;
     border: solid 1px #facfd4;
     font-family: Arial, Helvetica, sans-serif;
@@ -72,6 +72,13 @@ button#quickstart-password-reset{
     display: center;
     background-image: linear-gradient( to right, #f9e1e1 50%, #bfe9ff 10%, #ffcbd1 40% );
     transition: 0.5s;
+}
+
+button#quickstart-sign-up{
+    display: none;
+}
+#user_name{
+    display:none;
 }
 
 button#quickstart-password-reset{
@@ -117,7 +124,7 @@ h3:after {
   right: 0;
   top: 50%;
 }
-h4#forgot_password_text, h4#login_text {
+h4#forgot_password_text, h4#login_text, h4#create_acount {
     font-size: 13px;
     color: #522020;
     text-align: center;
