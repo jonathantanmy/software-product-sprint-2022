@@ -118,6 +118,7 @@ function loadHomeSet() {
     // not adding the controls attribute to the audio element -> so don't needa hide it - is already has display none
     const audio = document.createElement("audio");
     //adds the source of the audio file 
+   
     audio.setAttribute('src', "https://summer22-sps-23.uc.r.appspot.com/text-speech?textss=" + set.term);
     setElement.appendChild(image);
     setElement.appendChild(term);

@@ -45,6 +45,7 @@ import io.grpc.internal.PickFirstLoadBalancerProvider;
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
      LoadBalancerRegistry.getDefaultRegistry().register(new PickFirstLoadBalancerProvider());
+     
      String originalText2 = request.getParameter("textss");
     // Instantiates a client
     try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
