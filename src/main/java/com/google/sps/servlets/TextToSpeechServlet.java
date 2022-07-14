@@ -1,8 +1,8 @@
 package com.google.sps.servlets;
 
-// import java.io.FileOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-// import java.io.OutputStream;
+import java.io.OutputStream;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +19,12 @@ import com.google.cloud.texttospeech.v1.TextToSpeechClient;
 import com.google.cloud.texttospeech.v1.VoiceSelectionParams;
 import com.google.protobuf.ByteString;
 
-// import io.grpc.LoadBalancerRegistry;
-// import io.grpc.internal.PickFirstLoadBalancerProvider;
+import io.grpc.LoadBalancer;
+import io.grpc.LoadBalancerProvider;
+import io.grpc.NameResolver.ConfigOrError;
+import java.util.Map;
+import io.grpc.LoadBalancerRegistry;
+import io.grpc.internal.PickFirstLoadBalancerProvider;
 // import io.grpc.*;
 
 
@@ -35,16 +39,17 @@ import com.google.protobuf.ByteString;
 
   /** Demonstrates using the Text-to-Speech API. */
   @WebServlet("/text-speech")
-  public class TextToSpeechServlet  extends HttpServlet {
+  
+  public class TextToSpeechServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    //  LoadBalancerRegistry.getDefaultRegistry().register(new PickFirstLoadBalancerProvider());
-   
+     LoadBalancerRegistry.getDefaultRegistry().register(new PickFirstLoadBalancerProvider());
+     String originalText2 = request.getParameter("textss");
     // Instantiates a client
     try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
       // Set the text input to be synthesized
-      SynthesisInput input = SynthesisInput.newBuilder().setText("Talky Talky testing").build();
+      SynthesisInput input = SynthesisInput.newBuilder().setText(originalText2).build();
     //   setText("textss").build();
 
       // Build the voice request, select the language code ("en-US") and the ssml voice gender
@@ -78,6 +83,7 @@ import com.google.protobuf.ByteString;
 
     }
   }
+
 }
  // try (OutputStream out = new FileOutputStream("output.mp3")) {
     //     out.write(audioContents.toByteArray());
