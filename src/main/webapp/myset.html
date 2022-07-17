@@ -4,28 +4,32 @@
     <meta charset="UTF-8" />
     <title>TEAM-23 PROJECT</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="search.css" />
     <link rel="icon" href="/images/fav tt.png">
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     <script src="script.js"></script>
     <script src="/__/firebase/9.8.3/firebase-app-compat.js"></script>
     <script src="/__/firebase/9.8.3/firebase-auth-compat.js"></script>
     <script src="/__/firebase/init.js"></script>
   <script type="text/javascript">
-
+   
     /**
      * initApp handles setting up UI event listeners and registering Firebase auth listeners:
      *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
      *    out, and that is where we update the UI.
      */
      function initApp() {
+        
         // Listening for auth state changes.
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {// User is signed in.
-            console.log("there is a user");
+              console.log("there is a user");
                var uid = user.uid;
              console.log("in init " + uid);
 
@@ -38,6 +42,11 @@
             document.querySelector(".avatar").style.display="flex";
             document.querySelector(".signed_in_avatar").style.display="none";
             document.getElementById("create_link").href ="login.html";
+
+            
+
+          //redirect to index page--- if not logged in,shouldn't have access to the myset page
+          window.location.replace("index.html");
           } ;
         });
       }
@@ -48,7 +57,7 @@
   </script>
   </head>
   
-<body onload="loadHomeSet();initApp()">
+<body onload="initApp()">
     <head>
         <title>Create</title>
         <meta charset="utf-8" />
@@ -66,8 +75,8 @@
       <body>
         <header>
           <div class="navbar">
-            <a href="#">TALKY TALKY</a>
-            <a href="#">HOME</a>
+            <a href="index.html">TALKY TALKY</a>
+            <a href="index.html">HOME</a>
             <a href="create.html" id="create_link">CREATE</a>
             <a href="about.html">ABOUT</a>
           </div>
@@ -81,7 +90,7 @@
             </div>
             <div class="avatar"><a href="login.html"><i class="fa fa-user"></i></a></div>
             <div class="signed_in_avatar">
-            <button ></button>
+              <button></button>
               <ul>
                 <li><a href="#" id="mySets_link">My Sets</a></li>
                 <li><a href="#">Settings</a></li>
@@ -90,7 +99,46 @@
             </div>
           </div>
         </header>
-        <div class="grid" style="gap:60px;margin-top:40px;"></div>
+       
+        <div class="search_results"></div>
+        <script>
+          const params = new URLSearchParams(window.location.search); //gets the current url
+            var uid = params.get('uid'); // gets the value of the 'search' key
+            console.log("the uid = " + uid);
+            $(document).ready(function(){
+                
+                $.ajax({
+                url:"/mysets-results",
+                method:"POST",
+                dataType:'json',
+                data:{ 
+                
+                    uid:uid,
+                
+                },
+                cache:false,
+                success:function(data)
+                {
+                    console.log("in success?");
+                    console.log(data);
+                    console.log("json length is: " + data.length);
+                    console.log(data[0]);
+                    const setListElement = document.querySelector(".search_results");
+                    for(let i = 0; i < data.length; i++) {
+                       
+                        //create the element to display all the sets of this user
+                        setListElement.appendChild(createMySetsResult(data[i]));
+                    }
+                }
+                });
+                
+
+    
+            });
+        </script>
+
+          
+        </script> 
         <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
         <script>
           var config = {
@@ -99,6 +147,5 @@
           };
           firebase.initializeApp(config);
         </script>
-        
     </body>
 </html>
