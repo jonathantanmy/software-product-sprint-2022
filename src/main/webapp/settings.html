@@ -179,7 +179,7 @@
             const user = firebase.auth().currentUser;
 
             user.updateProfile({
-            displayName: name,
+           
             photoURL: imageLink
             }).then(() => {
             console.log("updated successfully");
