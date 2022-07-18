@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>TEAM-23 PROJECT</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="search.css" />
+    <link rel="stylesheet" href="create.css" />
+    <link rel="icon" href="/images/fav tt.png">
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <script src="script.js"></script>
+    <script src="/__/firebase/9.8.3/firebase-app-compat.js"></script>
+    <script src="/__/firebase/9.8.3/firebase-auth-compat.js"></script>
+    <script src="/__/firebase/init.js"></script>
+  <script type="text/javascript">
+
+    /**
+     * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+     *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+     *    out, and that is where we update the UI.
+     */
+     function initApp() {
+        // Listening for auth state changes.
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {// User is signed in.
+            console.log("there is a user");
+               var uid = user.uid;
+             console.log("in init " + uid);
+
+              document.querySelector(".avatar").style.display="none";
+            document.querySelector(".signed_in_avatar").style.display="block";
+            document.querySelector(".signed_in_avatar").style.backgroundImage= `url('${user.photoURL}')`;
+            document.getElementById("create_link").href ="create.html";
+            document.getElementById("mySets_link").href ="myset.html?uid="+ uid;
+            const param = new URLSearchParams(window.location.search); //gets the current url
+            var uid_param = params.get('uid');
+
+            //if the user who trying to edit this dataset is the not user who created the dataset
+            if ((uid_param !== uid)){
+                //redirect to index page
+               // window.location.replace("index.html");
+               console.log(" it doesn't matches-the uid ")
+            } else {
+                console.log("it matches the uid")
+            }
+
+
+          }else {
+            document.querySelector(".avatar").style.display="flex";
+            document.querySelector(".signed_in_avatar").style.display="none";
+            document.getElementById("create_link").href ="login.html";
+            
+          //redirect to index page -- because not logged in-- need to be logged in to edit
+          window.location.replace("index.html");
+          } ;
+        });
+      }
+    
+    window.onload = function() {
+      initApp();
+    };
+  </script>
+  </head>
+  
+<body onload="initApp()">
+    <head>
+        <title>Create</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        />
+        <link rel="stylesheet" href="style.css" />
+    
+        <script src="script.js"></script>
+        <link rel="stylesheet" href="create.css" />
+      </head>
+      <body>
+        <header>
+            <div class="navbar">
+                <a href="index.html">TALKY TALKY</a>
+                <a href="index.html">HOME</a>
+                <a href="create.html" id="create_link">CREATE</a>
+                <a href="about.html">ABOUT</a>
+              </div>
+    
+          <div class="right-navbar">
+            <div class="search-container">
+              <form action="search.html" method="GET">
+                <input type="text" placeholder="Search.." name="search" />
+                <button type="submit"><i class="fa fa-search"></i></button>
+              </form>
+            </div>
+            <div class="avatar"><a href="login.html"><i class="fa fa-user"></i></a></div>
+            <div class="signed_in_avatar">
+              <button></button>
+              <ul>
+                <li><a href="#" id="mySets_link">My Sets</a></li>
+                <li><a href="#">Settings</a></li>
+                <li ><a href="logout.html">Log Out</a></li>
+              </ul>
+            </div>
+          </div>
+        </header>
+     
+        <div class="create_container">
+            <div class="row">
+                <div class="create_top_section">
+                    <p id="create_error_messages"></p>
+                  <input
+                    type="text"
+                    id="set_name"
+                    placeholder="SET NAME.."
+                    name="set_name"
+                  />
+                  <div class="add_more_button">
+                    <button id="addmorebtn" onclick="addTerm()">
+                      ADD MORE &nbsp <i class="fa fa-plus"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="set_container">
+                  
+                     <form action="/update" class="MutipleRecord" method="POST" onsubmit="event.preventDefault();" enctype="multipart/form-data">
+                            
+                            <!---the set name can be changed --->
+                            <input type="hidden" name ="setName" id="hidden_set_name" />
+                            <input type="hidden" name ="term_amout" id="hidden_term_amount" />
+                            <input type="hidden" name ="setKind" id="hidden_setKind" />
+                            <input type="hidden" name ="setId" id="hidden_setId" />
+                            
+                            <div class="deleted_ids"></div>
+                            <div class="grid"></div>
+                            <button type="submit" onClick="submitForm()" id="set_submit_button">SUBMIT</button>
+                    </form>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <script>
+            const params = new URLSearchParams(window.location.search); //gets the current url
+            var kind = params.get('kind');
+            console.log("the kind is : " + kind);
+            var set_title = params.get('T');
+            var setID =  params.get('Id');
+
+            //load the title 
+           document.getElementById("set_name").setAttribute("value",set_title);
+
+           //load the title into the input form value
+           const hiddenSetName = document.getElementById("hidden_set_name");
+           hiddenSetName.setAttribute("value", set_title);
+
+           //load the kind into the input form value
+           const hidden_setKind = document.getElementById("hidden_setKind");
+           hidden_setKind.setAttribute("value", kind);
+
+           //load the id of this set in the "Sets" kind 
+           const hidden_setId = document.getElementById("hidden_setId");
+           hidden_setId.setAttribute("value", setID);
+
+
+           $(document).ready(function(){
+                $.ajax({
+                url:"/list-set",
+                method:"POST",
+                dataType:'json',
+                data:{ 
+                
+                    kind:kind,
+                
+                },
+                cache:false,
+                success:function(data)
+                {
+                    console.log("viewSet: in success?");
+                    console.log(data);
+                    console.log("json length is: " + data.length);
+                    console.log("first data(set)" + data[0]);
+                    const setListElement = document.querySelector(".grid");
+                    for(let i = 0; i < data.length; i++) {
+                        console.log("in foor loop");
+                        setListElement.appendChild(editSetElement(data[i]));
+                    }
+                    console.log("after finish loading the loop ");
+                    openFile2();
+                    onInput();
+                    setNameOnInput();
+                }
+               
+                });
+            });
+
+
+    
+            
+        </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+   
+    //error handling - action to do when user click the submit button
+    function submitForm(){
+        console.log("in the submitForm funtion")
+        var canSubmit = true;
+        const submitForm= document.querySelector(".MutipleRecord");
+       // submit.preventDefault()
+       const termList = document.querySelectorAll(".term_input");
+      
+       console.log("in submit the term list is " + termList.length);   
+       document.getElementById("hidden_term_amount").setAttribute('value',termList.length);           
+        var title = document.getElementById("set_name").value==""; //true/false if there a title value
+        if(title){// if title is empty 
+            document.getElementById("create_error_messages").innerText = "PLEASE ADD A SET TITLE";
+        } else { // if the title is filled 
+            termList.forEach((e) => {
+                const parent_grid = e.parentElement.parentElement;
+                var term = parent_grid.querySelector(".copy_text").innerText=="";
+                if (term) { //if true, means empty input 
+                    canSubmit=false;
+                    document.getElementById("create_error_messages").innerText = "ALL CARDS MUST HAVE A TERM OR REMOVE UNUSED CARDS";
+                }        
+   
+    });
+
+    if(canSubmit){
+        submitForm.submit(); //submits the form
+    }
+            
+
+        }
+
+    }
+
+    //creates a term card to add on
+    function addTerm(){
+    const duplicate_row = document.createElement("div");
+    duplicate_row.className = "duplicate-row";
+
+    //the remove button [willl be delete since the term already existed]
+    const remove_button = document.createElement("button");
+    remove_button.className = "btn-remove";
+    remove_button.innerText="REMOVE"
+
+    // the input box that holds the term string/value
+    const input_input_box = document.createElement("div");
+    input_input_box.className="input_input_box";
+    input_input_box.innerHTML=` 
+    <input
+    type="text"
+    class="term_input"
+    name="message"
+    placeholder="Term"
+  />`;
+
+
+  // the upload img element 
+  const upload_img_input_box = document.createElement("div");
+  upload_img_input_box.className="upload_img_input_box";
+
+
+  upload_img_input_box.innerHTML=`<input
+  class="upload_img_input"
+  type="file"
+  name="image"
+  accept="image/*"
+/>
+<button type="button" class="custom_img_input">
+  CHOOSE A IMAGE
+</button>
+<span class="custom_input_file_text"
+  >No image chosen, yet </span
+>`;
+
+//create the preview container
+const preview_container = document.createElement("div");
+preview_container.className="preview_container";
+const preview_label = document.createElement("label");
+preview_label.innerText = "Preview:";
+
+const preview_box = document.createElement("div");
+preview_box.className="preview_box";
+
+const preview_img = document.createElement("div");
+preview_img.className="preview_img";
+
+
+const copy_text = document.createElement("div");
+copy_text.className="copy_text";
+
+
+const audio = document.createElement("audio");
+
+
+preview_container.appendChild(preview_label);
+preview_container.appendChild(preview_box);
+preview_box.appendChild(preview_img);
+preview_box.appendChild(copy_text);
+preview_box.appendChild(audio);
+
+duplicate_row.appendChild(remove_button);
+
+duplicate_row.appendChild(input_input_box);
+
+duplicate_row.appendChild(upload_img_input_box);
+
+duplicate_row.appendChild(preview_container);
+
+const grid = document.querySelector(".grid");
+grid.appendChild(duplicate_row);
+openFile();
+onInput();
+    }
+
+  function setNameOnInput() {
+    console.log("in the setNameOnInput function -set Name");
+    const set_name = document.getElementById("set_name");
+    const hidden_set_name = document.getElementById("hidden_set_name");
+    set_name.addEventListener("input", function () {
+      hidden_set_name.setAttribute("value", set_name.value);
+    });
+  }
+
+  function onInput() {
+    console.log("on inpput function loaded");
+    const termList = document.querySelectorAll(".term_input");
+    console.log("in onInput function: " + termList);
+    console.log("in onInput function:" + termList[0]);
+    termList.forEach((e) => {
+      console.log(e.parentElement.nextElementSibling.nextElementSibling);
+      const previewText =
+        e.parentElement.nextElementSibling.nextElementSibling.querySelector(
+          ".copy_text"
+        );
+
+
+        const preview_box =
+        e.parentElement.nextElementSibling.nextElementSibling.querySelector(
+          ".preview_box"
+        );
+
+        const audio =  e.parentElement.nextElementSibling.nextElementSibling.querySelector(
+          "audio"
+        );
+
+      //live minicing -- on each key change in input field will reproduce it
+      e.addEventListener("input", function () {
+        previewText.innerText = e.value;
+        
+      
+        //adds the source of the audio file -- rabiat's website
+        //audio.setAttribute('src', "https://summer22-sps-23.uc.r.appspot.com/text-speech?textss=" + e.value);
+       
+        audio.src="https://summer22-sps-23.uc.r.appspot.com/text-speech?textss=" + e.value;
+
+       // preview_box.appendChild(audio);
+        
+        //when click on element-- should play the sound 
+        preview_box.addEventListener('click', function() {
+            audio.play();
+        }, false);
+
+
+
+
+      });
+    });
+  }
+
+  function updateTermNum() {
+      console.log("in updateTermNum");
+    const termInputList = document.querySelectorAll(".term_input");
+    for (i = 0; i < termInputList.length; i++) {
+      termInputList[i].placeholder = "Term " + (i + 1);
+    }
+  }
+
+  function deleteBtn(){
+    const deleteButton = document.querySelectorAll(".old_btn-remove");
+
+    deleteButton.forEach((e) => {
+        
+      e.addEventListener("click", function () {
+        //virtually click the real input type file = open file explorer
+        console.log("delete button click click");
+       const child = e.parentElement;
+
+       //get this set's id and adds it value to list of deleted terms 
+       const delete_id_value = child.querySelector(".set_id").value;
+       const deleteId =document.createElement("input");
+        deleteId.setAttribute("type", "hidden");
+        deleteId.setAttribute("name", "deleteId");
+        deleteId.setAttribute("value",delete_id_value );
+        const deleted_ids_div = document.querySelector(".deleted_ids");
+        deleted_ids_div.appendChild(deleteId);
+
+
+
+       const parent = child.parentElement;
+       parent.removeChild(child);
+       console.log("should hadd removed an duplicate-row div");
+       updateTermNum();
+
+
+
+      });
+
+    });
+
+  }
+
+  //this one initally checks through every class of .custom_img_input and takes care of its eventAction
+  //however, it won't be able to grab the last child as that will be newly loaded from the button
+  function openFile2() {
+    console.log("in openFile2()");
+    const customButton = document.querySelectorAll(".old_custom_img_input");
+    console.log("the customButton [querselectorAll]" + customButton);
+    console.log("the length of the customButton" + customButton.length);
+
+    updateTermNum();
+    deleteBtn();
+    customButton.forEach((e) => {
+      console.log("in for eachyyyy");
+      const old_realButton = e.parentElement.querySelector(".old_upload_img_input"); 
+      const customText = e.parentElement.querySelector(
+        ".custom_input_file_text"
+      );
+
+      e.addEventListener("click", function () {
+        //virtually click the real input type file = open file explorer
+        console.log("before click");
+        old_realButton.click();
+        
+      });
+
+      old_realButton.addEventListener("change", function () {
+        console.log(e.parentElement.nextElementSibling); //should get me the preview container
+        console.log(
+          e.parentElement.nextElementSibling.querySelector(".preview_img")
+        );
+        console.log(old_realButton.files[0]);
+
+        //if file is chosen
+        if (old_realButton.value) {
+          //set the value of the custom text to be the same value
+          customText.innerHTML = old_realButton.value;
+          const reader = new FileReader();
+
+          reader.readAsDataURL(old_realButton.files[0]); // async call
+          reader.onload = () => {
+            //reader.result gonna contain the base 64 dataURL that represents the img; gonna be available once reader is fonish reading the file
+
+            e.parentElement.nextElementSibling.querySelector(
+              ".copy_text"
+            ).style.height = "37px";
+            e.parentElement.nextElementSibling.querySelector(
+              ".preview_img"
+            ).style.display = "block";
+            //will place the img as a bg for the selected button
+            e.parentElement.nextElementSibling.querySelector(
+              ".preview_img"
+            ).style.backgroundImage = `url('${reader.result}')`;
+
+            //update that the input of name="changed_img" that it has changed img/added an new img 
+            e.parentElement.querySelector(".changed_img").setAttribute('value', 'true');
+                        
+          };
+        } else { // if no image-- set the display back to text in middle of the block [original display==clicking cancel on file]
+          customText.innerHTML = "No image chosen, yet";
+          e.parentElement.nextElementSibling.querySelector(
+              ".preview_img"
+            ).style.backgroundImage ="none";
+          e.parentElement.nextElementSibling.querySelector(
+              ".preview_img"
+            ).style.display = "none";
+          e.parentElement.nextElementSibling.querySelector(
+              ".copy_text"
+            ).style.height = "187px";
+            e.parentElement.querySelector(".changed_img").setAttribute('value', 'true');
+        }
+      });
+    });
+    
+  }
+ 
+  
+
+  function openFile() {
+    console.log("button was clicked");
+    //const realFileButton = document.querySelectorAll("upload_img_input");
+    const last_child = document.querySelector(".duplicate-row:last-child");
+
+    const customButton = last_child.querySelector(".custom_img_input");
+    console.log(customButton);
+    console.log(customButton.length);
+
+    updateTermNum();
+
+    // query the remove button
+    const remove_button =  last_child.querySelector(".btn-remove");
+
+    //when click, should remove the element from the page
+    remove_button.addEventListener("click", function(){
+        const parent= last_child.parentElement;
+        parent.removeChild(last_child);
+        console.log("should had removed the term set");
+        updateTermNum();
+
+    });
+
+
+    console.log("in for eachyyyy");
+    const realButton = last_child.querySelector(".upload_img_input");
+    const customText = last_child.querySelector(".custom_input_file_text");
+
+    customButton.addEventListener("click", function () {
+      //virtually click the real input type file = open file explorer
+      console.log("before click");
+      realButton.click();
+    });
+
+    //when a file is chosen(=="changes")
+    realButton.addEventListener("change", function () {
+      console.log(last_child.querySelector(".preview_img"));
+      console.log(realButton.files[0]);
+
+      //if file is chosen
+      if (realButton.value) {
+        //set the value of the custom text to be the same value
+        customText.innerHTML = realButton.value;
+        const reader = new FileReader();
+
+        reader.readAsDataURL(realButton.files[0]); // async call
+        reader.onload = () => {
+          //reader.result gonna contain the base 64 dataURL that represents the img; gonna be available once reader is fonish reading the file
+
+          last_child.querySelector(".copy_text").style.height = "37px";
+          last_child.querySelector(".preview_img").style.display = "block";
+          //will place the img as a bg for the selected button
+          last_child.querySelector(
+            ".preview_img"
+          ).style.backgroundImage = `url('${reader.result}')`;
+        };
+      } else {
+        customText.innerHTML = "No image chosen, yet";
+        last_child.querySelector(".preview_img").style.backgroundImage =
+          "none";
+          last_child.querySelector(".preview_img").style.display = "none";
+          last_child.querySelector(".copy_text").style.height = "187px";
+      }
+    });
+  }
+</script>
+          
+        </script> 
+        <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
+        <script>
+          var config = {
+            apiKey: "AIzaSyAFKd2dsIQFjbKjnqw-V5CBnHb0FVbi32A",
+            authDomain: "summer22-sps-23.firebaseapp.com",
+          };
+          firebase.initializeApp(config);
+        </script>
+    </body>
+</html>
