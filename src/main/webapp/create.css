@@ -124,6 +124,8 @@ button.old_btn-remove:hover {
   overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
+    
+    white-space: nowrap;
 }
 
 

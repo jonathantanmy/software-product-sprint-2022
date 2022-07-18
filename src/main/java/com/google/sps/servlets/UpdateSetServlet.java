@@ -221,6 +221,7 @@ for (Part  old_filePart :  old_fileParts) {
 
 //the following for-each will update the term value on exisiting terms 
 int j=0;
+if(old_messages!=null){
 for (String  old_message : old_messages) {
     String term = Jsoup.clean(old_message, Whitelist.none());
     long id = Long.parseLong(Jsoup.clean(setIds[j], Whitelist.none()));
@@ -238,7 +239,7 @@ for (String  old_message : old_messages) {
 
     j++;
 }// for-each on update the term value
-
+}
 
     /**NOW ONTO ADDING NEW TERMS INTO THE SET IF THERE ARE NEW ONES TO ADD */
     int k=0;
