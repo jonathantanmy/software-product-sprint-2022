@@ -23,12 +23,43 @@ button#addmorebtn {
   background-color: inherit;
   cursor: pointer;
 }
-button.btn-remove {
+button.btn-remove,
+button.old_btn-remove {
   border: none;
   background-color: #e0e7ff;
   border-radius: 5px;
   width: 100%;
+
+  cursor: pointer;
+  padding: 2px;
+  transition: 0.5s;
+  background-size: 200% auto;
+  box-shadow: 0 0 20px #cdd4ec;
+  background-image: linear-gradient(
+    to right,
+    #e0e7ff 50%,
+    #b8c6f3 10%,
+    #ced9fc 40%
+  );
+  transition: 0.5s;
 }
+
+
+
+button.btn-remove:hover,
+button.old_btn-remove:hover {
+    background-image: linear-gradient(
+      to right,
+      #ffe6e6 0%,
+      #c6dce4 51%,
+      #cdb8fc 100%
+    );
+    background-position: right center;
+  
+    color: white;
+    text-decoration: none;
+  }
+
 .preview_img {
   width: 200px;
   aspect-ratio: 4/3;
@@ -73,7 +104,7 @@ button.btn-remove {
   display: none;
 }
 
-.custom_img_input {
+.custom_img_input, .old_custom_img_input{
   padding: 10px;
   color: white;
   background-color: #d3cedf;
@@ -93,7 +124,9 @@ button.btn-remove {
   overflow: hidden;
     text-overflow: ellipsis;
 }
-.upload_img_input {
+
+
+.upload_img_input, .old_upload_img_input {
   display: none;
 }
 
@@ -117,7 +150,7 @@ input.term_input {
   width: 95%;
 }
 
-.upload_img_input_box {
+.upload_img_input_box{
   display: flex;
   width: 100%;
   flex-direction: column;
