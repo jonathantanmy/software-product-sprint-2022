@@ -160,3 +160,12 @@
     min-width: 1000px;
     }
   }
+  
+
+  .about-section {
+    padding: 50px;
+    text-align: left;
+    background-color: #ffe6e6;
+    color: rgb(5, 5, 5);
+  }
+  
