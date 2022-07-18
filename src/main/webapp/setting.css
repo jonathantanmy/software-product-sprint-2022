@@ -1,10 +1,14 @@
+h1#name {
+    color: #5454bd;
+    display: contents;
+}
 h1#name:before {
     content: "HELLO ";
+    color: black;
+    font-family: emoji;
+    font-size: 24px;
 }
 
-h1#name:after {
-    content: " !";
-}
 
 .profilePicPreview {
     aspect-ratio: 1/1;
@@ -30,4 +34,39 @@ label {
     font-size: 10px;
     letter-spacing: 2px;
     font-weight: bolder;
+}
+
+input#acctName,input#acctEmail, input#acctPassword {
+width: 233px;
+border-radius: 2px;
+border: solid 1px #dcdcdc;
+padding: 4px;
+font-size: 14px;
+}
+.profilePicPreview{
+    background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.profile_section {
+    display: flex;
+    gap: 10px;
+    align-content: stretch;
+    align-items: center;
+}
+div#name_update {
+    display: flex;
+    flex-direction: column;
+ 
+    gap: 13px;
+
+    align-items: center;
+}
+
+.setting-section {
+    width: fit-content;
+    margin: auto;
+        margin-top: 20px;
+    
 }

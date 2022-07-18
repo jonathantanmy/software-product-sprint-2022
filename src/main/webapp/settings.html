@@ -28,25 +28,26 @@
             var name = user.displayName;
             var email = user.email;
             const photoURL = user.photoURL;
+            var uid = user.uid;
             document.getElementById('name').innerText = user.displayName;
+            console.log("user"+ user.displayName);
             document.getElementById('email').innerText = user.email;
               console.log("there is a user");
-              console.log(document.getElementById('p1'));
               console.log(name);
               console.log(email);
               console.log(photoURL)
-              var name2 = user.photoURL
-              var name3 = " " + name2;
-              name3.innerText += "&quot;&quot;"
-              console.log(name3);
-              console.log(name2);
-            document.querySelector(".avatar").style.display="none";
+              document.querySelector(".avatar").style.display="none";
             document.querySelector(".signed_in_avatar").style.display="block";
+            document.querySelector(".signed_in_avatar").style.backgroundImage= `url('${user.photoURL}')`;
+            document.querySelector(".profilePicPreview").style.backgroundImage= `url('${user.photoURL}')`;            
             document.getElementById("create_link").href ="create.html";
+            document.getElementById("mySets_link").href ="myset.html?uid="+ uid;
           }else {
             document.querySelector(".avatar").style.display="flex";
             document.querySelector(".signed_in_avatar").style.display="none";
             document.getElementById("create_link").href ="login.html";
+            //redirect to index page
+            window.location.replace("index.html");
           } ;
         });
       }
@@ -77,8 +78,8 @@
           <div class="navbar">
             <a href="index.html">TALKY TALKY</a>
             <a href="index.html">HOME</a>
-            <a href="" id="create_link">CREATE</a>
-            <a href="#">ABOUT</a>
+            <a href="create.html" id="create_link">CREATE</a>
+            <a href="about.html">ABOUT</a>
           </div>
     
           <div class="right-navbar">
@@ -90,9 +91,9 @@
             </div>
             <div class="avatar"><a href="login.html"><i class="fa fa-user"></i></a></div>
             <div class="signed_in_avatar">
-              <button><i class="fa fa-user"></i></button>
+              <button></button>
               <ul>
-                <li><a href="#">My Sets</a></li>
+                <li><a href="#" id="mySets_link">My Sets</a></li>
                 <li><a href="settings.html">Settings</a></li>
                 <li ><a href="logout.html">Log Out</a></li>
               </ul>
@@ -100,13 +101,26 @@
           </div>
         </header>
         <div class="setting-section">
-            <h1 id="name">Name</h1>
+           
             <div class="profile_section">
 
-             <div class="profilePic_outer">
-                 <div class="profilePicPreview"></div>
-             </div>
-            <div class="updateacctform">
+                <div class="profilePic_outer">
+                    <div class="profilePicPreview"></div>
+                </div>
+                <div id="name_update">
+                <h1 id="name">Name</h1>
+                    
+                    
+                </div>
+            </div>
+            
+
+            <form>
+                <label> UPDATE PROFILE PIC WITH IMAGE URL:</label><br>
+                <input type="text" name="file" id="pfpFile" placeholder="IMAGE URL....">
+                <input type="button" id='button' value = "Update" onclick="updateProfileLink()">
+            </form>
+             <div class="updateacctform">
     
                 <label> UPDATE YOUR NAME:</label><br>
                 <input id="acctName" type="name" placeholder="NEW NAME....">
@@ -114,10 +128,6 @@
                 <input type="button" id='button' value = "Update" onclick="updatethename()">
                 
             </div>
-        </div>
-             </div>
-            
-
             <h2>Update your email</h2>
             <p id="p2">Current Email:</p>
             <p id="email">Email</p>
@@ -147,6 +157,8 @@
                
              
         </div>
+        </div>
+            
         <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
         <script>
           var config = {
@@ -155,13 +167,33 @@
           };
           firebase.initializeApp(config);
         </script>
+     
         <script>
-            var name = user.displayName
-            document.getElementById('p1').innerText = user.displayName;
+           
 
-            var name2 = user.photoURL
-            var pic = document.getElementById('imaged');
-            pic.src=name2;
+            function updateProfileLink(){
+                console.log("hello");
+                firebase.auth().onAuthStateChanged(function (firebaseUser) { 
+            if (firebaseUser) { 
+            var imageLink = document.getElementById('pfpFile').value; 
+            const user = firebase.auth().currentUser;
+
+            user.updateProfile({
+            displayName: name,
+            photoURL: imageLink
+            }).then(() => {
+            console.log("updated successfully");
+            }).catch((error) => {
+            // An error occurred
+            console.log(error);
+            // ...
+            });  
+            
+           
+            }
+            });
+            window.location.reload();
+            }
 
 
 
