@@ -24,6 +24,13 @@
     width: 100%;
     height: 62px;
     border-bottom: solid 1px #e1e1e1;
+
+    margin-right: auto;    
+    margin-left: auto;    
+    max-width: 100%;    
+    min-width: 1000px;
+    
+     white-space: nowrap;
   }
   .navbar a {
     float: left;
@@ -144,4 +151,12 @@
     visibility: visible;
     transform: translateY(10px);
   }
-  
+  @media only screen and (min-device-width : 320px) and (max-device-width : 780px) {
+    body {
+      background-color:#DAEAF1 ;
+     margin-right: auto;    
+    margin-left: auto;    
+    max-width: 100%;    
+    min-width: 1000px;
+    }
+  }
