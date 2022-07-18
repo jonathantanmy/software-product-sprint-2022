@@ -144,4 +144,11 @@
     visibility: visible;
     transform: translateY(10px);
   }
+
+  .about-section {
+    padding: 50px;
+    text-align: left;
+    background-color: #ffe6e6;
+    color: rgb(5, 5, 5);
+  }
   
