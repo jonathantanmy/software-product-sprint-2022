@@ -205,12 +205,15 @@
         const submitForm= document.querySelector(".MutipleRecord");
        // submit.preventDefault()
        const termList = document.querySelectorAll(".term_input");
+      
+       console.log("in submit the term list is " + termList.length);       
         var title = document.getElementById("set_name").value==""; //true/false if there a title value
         if(title){// if title is empty 
             document.getElementById("create_error_messages").innerText = "PLEASE ADD A SET TITLE";
         } else { // if the title is filled 
             termList.forEach((e) => {
-                var term = document.querySelector(".term_input").value=="";
+                const parent_grid = e.parentElement.parentElement;
+                var term = parent_grid.querySelector(".copy_text").innerText=="";
                 if (term) { //if true, means empty input 
                     canSubmit=false;
                     document.getElementById("create_error_messages").innerText = "ALL CARDS MUST HAVE A TERM OR REMOVE UNUSED CARDS";
@@ -227,6 +230,7 @@
 
     }
 
+    //creates a term card to add on
     function addTerm(){
     const duplicate_row = document.createElement("div");
     duplicate_row.className = "duplicate-row";

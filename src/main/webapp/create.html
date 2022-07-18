@@ -219,7 +219,8 @@
                 document.getElementById("create_error_messages").innerText = "PLEASE ADD A SET TITLE";
             } else { // if the title is filled 
                 termList.forEach((e) => {
-                    var term = document.querySelector(".term_input").value=="";
+                    const parent_grid = e.parentElement.parentElement;
+                var term = parent_grid.querySelector(".copy_text").innerText=="";
                     if (term) { //if true, means empty input 
                         canSubmit=false;
                         document.getElementById("create_error_messages").innerText = "ALL CARDS MUST HAVE A TERM OR REMOVE UNUSED CARDS";
