@@ -134,6 +134,7 @@
                             
                             <!---the set name can be changed --->
                             <input type="hidden" name ="setName" id="hidden_set_name" />
+                            <input type="hidden" name ="term_amout" id="hidden_term_amount" />
                             <div class="deleted_ids"></div>
                             <div class="grid"></div>
                             <button type="submit" onClick="submitForm()" id="set_submit_button">SUBMIT</button>
@@ -206,7 +207,8 @@
        // submit.preventDefault()
        const termList = document.querySelectorAll(".term_input");
       
-       console.log("in submit the term list is " + termList.length);       
+       console.log("in submit the term list is " + termList.length);   
+       document.getElementById("hidden_term_amount").setAttribute('value',termList.length);           
         var title = document.getElementById("set_name").value==""; //true/false if there a title value
         if(title){// if title is empty 
             document.getElementById("create_error_messages").innerText = "PLEASE ADD A SET TITLE";
