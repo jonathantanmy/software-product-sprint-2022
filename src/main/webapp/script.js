@@ -240,7 +240,7 @@ function loadHomeSet() {
 
   if (set.hasImage){ // if has image,parse the exisiting img name from the database to only showcase the img name
       var imageName = set.imageName;
-      var img_length = imageName.length();//get length of the imagename
+      var img_length = imageName.length;//get length of the imagename
       var subtring_length = img_length-13; //subtract 13 because the timestamp is 13 characters
       var actual_imgName =  imageName.substring(0, subtring_length)
       img_msg = actual_imgName;
@@ -251,7 +251,7 @@ function loadHomeSet() {
   upload_img_input_box.innerHTML=`<input
   class="old_upload_img_input"
   type="file"
-  name="image"
+  name="old_image"
   accept="image/*"
 />
 <input type="hidden" name ="had_img" class="had_img" value= "${set.hasImage}" />

@@ -130,11 +130,14 @@
 
                 <div class="set_container">
                   
-                     <form action="" class="MutipleRecord" method="POST" onsubmit="event.preventDefault();" enctype="multipart/form-data">
+                     <form action="/update" class="MutipleRecord" method="POST" onsubmit="event.preventDefault();" enctype="multipart/form-data">
                             
                             <!---the set name can be changed --->
                             <input type="hidden" name ="setName" id="hidden_set_name" />
                             <input type="hidden" name ="term_amout" id="hidden_term_amount" />
+                            <input type="hidden" name ="setKind" id="hidden_setKind" />
+                            <input type="hidden" name ="setId" id="hidden_setId" />
+                            
                             <div class="deleted_ids"></div>
                             <div class="grid"></div>
                             <button type="submit" onClick="submitForm()" id="set_submit_button">SUBMIT</button>
@@ -151,6 +154,7 @@
             var kind = params.get('kind');
             console.log("the kind is : " + kind);
             var set_title = params.get('T');
+            var setID =  params.get('Id');
 
             //load the title 
            document.getElementById("set_name").setAttribute("value",set_title);
@@ -158,6 +162,15 @@
            //load the title into the input form value
            const hiddenSetName = document.getElementById("hidden_set_name");
            hiddenSetName.setAttribute("value", set_title);
+
+           //load the kind into the input form value
+           const hidden_setKind = document.getElementById("hidden_setKind");
+           hidden_setKind.setAttribute("value", kind);
+
+           //load the id of this set in the "Sets" kind 
+           const hidden_setId = document.getElementById("hidden_setId");
+           hidden_setId.setAttribute("value", setID);
+
 
            $(document).ready(function(){
                 $.ajax({

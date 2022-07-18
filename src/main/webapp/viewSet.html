@@ -146,7 +146,12 @@
                         console.log("in foor loop");
                         setListElement.appendChild(createSetElement(data[i]));
                     }
-                }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                console.log(thrownError);
+            }
                 });
                 
 

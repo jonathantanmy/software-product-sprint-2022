@@ -123,6 +123,7 @@ button.old_btn-remove:hover {
   color: #aaa;
   overflow: hidden;
     text-overflow: ellipsis;
+    width: 100%;
 }
 
 
