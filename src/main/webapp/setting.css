@@ -1,0 +1,33 @@
+h1#name:before {
+    content: "HELLO ";
+}
+
+h1#name:after {
+    content: " !";
+}
+
+.profilePicPreview {
+    aspect-ratio: 1/1;
+    width: 154px;
+    border-radius: 50%;
+    background: #fde4e485;
+    border: 1px solid #9191a7;
+    position: absolute;
+    top: 4%;
+    left: 4%;
+}
+
+.profilePic_outer {
+    aspect-ratio: 1/1;
+    width: 170px;
+    border-radius: 50%;
+    background: #fde4e429;
+    border: 1px solid #737397;
+    position: relative;
+}
+label {
+    font-family: fangsong;
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: bolder;
+}

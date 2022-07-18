@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>TEAM-23 PROJECT</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="setting.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -98,18 +99,24 @@
             </div>
           </div>
         </header>
-        <div class="about-section">
+        <div class="setting-section">
+            <h1 id="name">Name</h1>
+            <div class="profile_section">
 
-            <h2>Update Your Name</h2>
-            <p id="name">Name</p>
+             <div class="profilePic_outer">
+                 <div class="profilePicPreview"></div>
+             </div>
             <div class="updateacctform">
     
-                <input id="acctName" type="name" placeholder="name">
+                <label> UPDATE YOUR NAME:</label><br>
+                <input id="acctName" type="name" placeholder="NEW NAME....">
     
                 <input type="button" id='button' value = "Update" onclick="updatethename()">
                 
             </div>
-            <br>
+        </div>
+             </div>
+            
 
             <h2>Update your email</h2>
             <p id="p2">Current Email:</p>
@@ -135,16 +142,10 @@
 
             <br>
 
-            <h2>Update your Profile Picture</h2>
-                  <form id="uploadform" target="upiframe" action="upload.php" method="post" enctype="multipart/form-data">
-                    <input type="file" name="fileToUpload" class="test" onchange="yourFunction()">
-                  </form>
-                  <iframe id="upiframe" name="upiframe" witdh="0px" height="0px" border="0" style="width:0; height:0; border:none;"></iframe>
-                    </form>
-
-                  </div>
-                </div>
-              </div>
+            
+                 
+               
+             
         </div>
         <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
         <script>
@@ -163,9 +164,6 @@
             pic.src=name2;
 
 
-            function yourFunction() {
-            document.getElementById("uploadform").submit()
-            }
 
         function updatetheEmail(){
             firebase.auth().onAuthStateChanged(function (firebaseUser) { 
