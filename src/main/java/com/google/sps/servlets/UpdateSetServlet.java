@@ -185,7 +185,7 @@ for (Part  old_filePart :  old_fileParts) {
             datastore.put(set);
 
              //update the hasImage to be true
-             set = Entity.newBuilder(set).set("hasImage", "true").build();
+             set = Entity.newBuilder(set).set("hasImage", true).build();
              datastore.put(set);
 
         }// else of if-else
@@ -202,7 +202,7 @@ for (Part  old_filePart :  old_fileParts) {
             Entity set = datastore.get(setKey);
 
             //update the hasImage 
-            set = Entity.newBuilder(set).set("hasImage", "false").build();
+            set = Entity.newBuilder(set).set("hasImage", false).build();
             datastore.put(set);
 
              //update the image url 
