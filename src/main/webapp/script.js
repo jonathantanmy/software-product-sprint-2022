@@ -192,7 +192,8 @@ function loadHomeSet() {
     const edit = document.createElement("div");
     edit.className = "mysets_edit";
 
-    edit.innerHTML=`<a href= "editSet.html?kind=${set.set_database}&T=${set.setname}&Id=${set.id}&uid=${set.uid}"><i class='fa fa-pencil'></i>`;
+    edit.innerHTML=`<a href= "editSet.html?kind=${set.set_database}&T=${set.setname}&Id=${set.id}&uid=${set.uid}"><i class='fa fa-pencil'></i>
+    <a href= "delete?kind=${set.set_database}&Id=${set.id}&uid=${set.uid}"><i class='fa fa-trash'></i>`;
     
     searchResult.appendChild(title);
     searchResult.appendChild(creator);
