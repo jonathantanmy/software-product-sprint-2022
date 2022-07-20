@@ -36,12 +36,37 @@ label {
     font-weight: bolder;
 }
 
-input#acctName,input#acctEmail, input#acctPassword {
-width: 233px;
+input#acctName,input#acctEmail, input#acctPassword, input#pfpFile {
+width: 100%;
 border-radius: 2px;
 border: solid 1px #dcdcdc;
 padding: 4px;
 font-size: 14px;
+}
+
+input#button{
+    height: 23px;
+    width: 103%;
+    border-radius: 4px;
+    border: solid 1px #facfd4;
+    font-family: emoji;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    background-color: #f9e1e1;
+    transition: 0.5s;
+    background-size: 200% auto;
+    box-shadow: 0 0 20px #eee;
+    background-image: linear-gradient( to right, #f9e1e1 50%, #bfe9ff 10%, #ffcbd1 40% );
+    transition: 0.5s;    
+}
+
+input#button:hover{
+    background-image: linear-gradient( to right, #ff6e7f 0%, #bfe9ff 51%, #ff6e7f 100% );
+    background-position: right center;
+    color: RIGHT;
+    color: #fff;
+    text-decoration: none;
 }
 .profilePicPreview{
     background-position: center;
@@ -55,7 +80,7 @@ font-size: 14px;
     align-content: stretch;
     align-items: center;
 }
-div#name_update {
+div#name_box {
     display: flex;
     flex-direction: column;
  
