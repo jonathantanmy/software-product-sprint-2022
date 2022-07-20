@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>TEAM-23 PROJECT</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="about.css" />
     <link rel="icon" href="/images/fav tt.png">
 
     <link
@@ -26,14 +27,15 @@
         // Listening for auth state changes.
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {// User is signed in.
-              console.log("there is a user");
-            
+            console.log("there is a user");
+               var uid = user.uid;
+             console.log("in init " + uid);
 
-          
               document.querySelector(".avatar").style.display="none";
             document.querySelector(".signed_in_avatar").style.display="block";
             document.querySelector(".signed_in_avatar").style.backgroundImage= `url('${user.photoURL}')`;
             document.getElementById("create_link").href ="create.html";
+            document.getElementById("mySets_link").href ="myset.html?uid="+ uid;
           }else {
             document.querySelector(".avatar").style.display="flex";
             document.querySelector(".signed_in_avatar").style.display="none";
@@ -70,8 +72,7 @@
             <a href="index.html">HOME</a>
             <a href="" id="create_link">CREATE</a>
             <a href="#">ABOUT</a>
-          </div>
-    
+          </div>                  
           <div class="right-navbar">
             <div class="search-container">
               <form action="search.html" method="GET">
@@ -83,13 +84,27 @@
             <div class="signed_in_avatar">
               <button></button>
               <ul>
-                <li><a href="#">My Sets</a></li>
-                <li><a href="#">Settings</a></li>
+
+                <li><a href="#" id="mySets_link">My Sets</a></li>
+                
+                <li><a href="settings.html">Settings</a></li>
+
+
                 <li ><a href="logout.html">Log Out</a></li>
               </ul>
             </div>
           </div>
-        </header>
+        </header>            
+        </div>
+
+        <div class="aboutmain">
+            <h3>About Us</h3>
+            <p>Our mission is to let people talk to each other, freely. </p>
+
+            <p2>In a world where we've experienced a lot of challenges within a special group, it is our mission to ease and enable smooth communication for people who have difficulties in verbal communication. Being able to communicate easily with others shouldn't have to be a financial issue. Our goal is to ease the financial burden and stress of individuals who are unable to afford expensive communication gadgets or apps. So, as a group of students in the Google SPS Program, we created Talky Talky, a user-friendly way for nonverbal kids/individuals to communicate with family or anyone without drawbacks or barriers. To improve communication access for people that need it the most. Anyone can create a card with an image attached to it and tap or click on it in order to hear the word played back to them via text-to-speech. Create an account and try it out!!</p2>
+
+            </div>
+
         <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
         <script>
           var config = {

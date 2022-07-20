@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>TEAM-23 PROJECT</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="setting.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <script src="script.js"></script>
+    <script src="/__/firebase/9.8.3/firebase-app-compat.js"></script>
+    <script src="/__/firebase/9.8.3/firebase-auth-compat.js"></script>
+    <script src="/__/firebase/init.js"></script>
+  <script type="text/javascript">
+
+    /**
+     * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+     *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+     *    out, and that is where we update the UI.
+     */
+     function initApp() {
+        // Listening for auth state changes.
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {// User is signed in.
+            var name = user.displayName;
+            var email = user.email;
+            const photoURL = user.photoURL;
+            var uid = user.uid;
+            document.getElementById('name').innerText = user.displayName;
+            console.log("user"+ user.displayName);
+            document.getElementById('acctEmail').setAttribute("placeholder", user.email);
+              console.log("there is a user");
+              console.log(name);
+              console.log(email);
+              console.log(photoURL)
+              document.querySelector(".avatar").style.display="none";
+            document.querySelector(".signed_in_avatar").style.display="block";
+            document.querySelector(".signed_in_avatar").style.backgroundImage= `url('${user.photoURL}')`;
+            document.querySelector(".profilePicPreview").style.backgroundImage= `url('${user.photoURL}')`;            
+            document.getElementById("create_link").href ="create.html";
+            document.getElementById("mySets_link").href ="myset.html?uid="+ uid;
+          }else {
+            document.querySelector(".avatar").style.display="flex";
+            document.querySelector(".signed_in_avatar").style.display="none";
+            document.getElementById("create_link").href ="login.html";
+            //redirect to index page
+            window.location.replace("index.html");
+          } ;
+        });
+      }
+    
+    window.onload = function() {
+      initApp();
+    };
+  </script>
+  </head>
+  
+<body onload="initApp()">
+    <head>
+        <title>Create</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        />
+        <link rel="stylesheet" href="style.css" />
+    
+        <script src="script.js"></script>
+        <link rel="stylesheet" href="create.css" />
+      </head>
+      <body>
+        <header>
+          <div class="navbar">
+            <a href="index.html">TALKY TALKY</a>
+            <a href="index.html">HOME</a>
+            <a href="create.html" id="create_link">CREATE</a>
+            <a href="about.html">ABOUT</a>
+          </div>
+    
+          <div class="right-navbar">
+            <div class="search-container">
+              <form action="search.html" method="GET">
+                <input type="text" placeholder="Search.." name="search" />
+                <button type="submit"><i class="fa fa-search"></i></button>
+              </form>
+            </div>
+            <div class="avatar"><a href="login.html"><i class="fa fa-user"></i></a></div>
+            <div class="signed_in_avatar">
+              <button></button>
+              <ul>
+                <li><a href="#" id="mySets_link">My Sets</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li ><a href="logout.html">Log Out</a></li>
+              </ul>
+            </div>
+          </div>
+        </header>
+        <div class="setting-section">
+           
+            <div class="profile_section">
+
+                <div class="profilePic_outer">
+                    <div class="profilePicPreview"></div>
+                </div>
+                <div id="name_box">
+                <h1 id="name">Name</h1> 
+                </div>
+            </div>
+            
+
+            <form>
+                <label> UPDATE PROFILE PIC WITH IMAGE URL:</label><br>
+                <input type="text" name="file" id="pfpFile" placeholder="Image Url....">
+                <input type="button" id='button' value = "UPDATE PROFILE PIC" onclick="updateProfileLink()">
+            </form>
+            <br>
+             <div class="updateacctform">
+    
+                <label> UPDATE YOUR NAME:</label><br>
+                <input id="acctName" type="name" placeholder="New Name....">
+    
+                <input type="button" id='button' value = "UPDATE NAME" onclick="updatethename()">
+                
+            </div>
+           
+            <br>
+            <div class="updateacctform">
+                <label> Update your email:</label><br>
+                <input id="acctEmail" type="email" placeholder="Email">
+    
+                <input type="button" id='button' value = "UPDATE EMAIL" onclick="updatetheEmail()">
+            
+            </div>
+
+            <br>
+
+           
+            <div class="updateacctform">
+    
+                <label> Update your Password:</label><br>
+                <input id="acctPassword" type="password" placeholder="Password">
+    
+                <input type="button" id='button' value = "UPDATE PASSWORD" onclick="updatethepasword()">
+                
+            </div>
+
+            <br>
+
+            
+                 
+               
+             
+        </div>
+        </div>
+            
+        <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
+        <script>
+          var config = {
+            apiKey: "AIzaSyAFKd2dsIQFjbKjnqw-V5CBnHb0FVbi32A",
+            authDomain: "summer22-sps-23.firebaseapp.com",
+          };
+          firebase.initializeApp(config);
+        </script>
+     
+        <script>
+           
+
+            function updateProfileLink(){
+                console.log("hello");
+                firebase.auth().onAuthStateChanged(function (firebaseUser) { 
+            if (firebaseUser) { 
+            var imageLink = document.getElementById('pfpFile').value; 
+            const user = firebase.auth().currentUser;
+
+            user.updateProfile({
+           
+            photoURL: imageLink
+            }).then(() => {
+            console.log("updated successfully");
+            }).catch((error) => {
+            // An error occurred
+            console.log(error);
+            // ...
+            });  
+            
+           
+            }
+            });
+            window.location.reload();
+            }
+
+
+
+        function updatetheEmail(){
+            firebase.auth().onAuthStateChanged(function (firebaseUser) { 
+            if (firebaseUser) { 
+            var newEmail = document.getElementById('acctEmail').value; 
+            var user = firebase.auth().currentUser; 
+            user.updateEmail(newEmail).then(() => {
+             alert('Updated')
+             window.location.reload();
+            }).catch((error) => {
+                var userpassword = prompt("Enter currrent password");
+                const credential = firebase.auth.EmailAuthProvider.credential(
+                user.email, 
+                 userpassword
+            );
+                user.reauthenticateWithCredential(credential).then(() => {
+                    user.updateEmail(newEmail)
+                    window.location.reload();
+            }).catch((error) => {
+            alert('The email address is already in use by another account.')
+            });
+            });
+            }
+            });
+            window.location.reload();
+        }
+
+        function updatethepasword(){
+            firebase.auth().onAuthStateChanged(function (firebaseUser) { 
+            if (firebaseUser) { 
+            var newpassword = document.getElementById('acctPassword').value; 
+            var user = firebase.auth().currentUser; 
+            user.updatePassword(newpassword).then(() => {
+             alert('Updated')
+             window.location.reload();
+            }).catch((error) => {
+                var userpassword = prompt("Enter currrent password");
+                const credential = firebase.auth.EmailAuthProvider.credential(
+            user.email, 
+            userpassword
+            );
+                user.reauthenticateWithCredential(credential).then(() => {
+                    user.updatePassword(newpassword)
+                    window.location.reload();
+            }).catch((error) => {
+            alert('Not Applicable')
+            });
+            });
+            }
+            });
+        }
+        function updatethename(){
+            firebase.auth().onAuthStateChanged(function (firebaseUser) { 
+            if (firebaseUser) { 
+            var newname = document.getElementById('acctName').value; 
+            var user = firebase.auth().currentUser; 
+            user.updateProfile({
+            displayName: newname
+            }).then(() => {
+                alert('Updated')
+                window.location.reload();
+            }).catch((error) => {
+                var userpassword = prompt("Enter currrent password");
+                const credential = firebase.auth.EmailAuthProvider.credential(
+            user.email, 
+            userpassword
+            );
+                user.reauthenticateWithCredential(credential).then(() => {
+                    user.updateProfile({
+            displayName: newname
+            })
+            window.location.reload();
+            }).catch((error) => {
+            alert('Not Applicable')
+            });
+            });
+            }
+            });
+            
+        }
+        </script>
+    </body>
+</html>

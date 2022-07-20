@@ -18,17 +18,18 @@
     <script src="/__/firebase/9.8.3/firebase-auth-compat.js"></script>
     <script src="/__/firebase/init.js"></script>
   <script type="text/javascript">
-
+   
     /**
      * initApp handles setting up UI event listeners and registering Firebase auth listeners:
      *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
      *    out, and that is where we update the UI.
      */
      function initApp() {
+        
         // Listening for auth state changes.
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {// User is signed in.
-            console.log("there is a user");
+              console.log("there is a user");
                var uid = user.uid;
              console.log("in init " + uid);
 
@@ -41,6 +42,11 @@
             document.querySelector(".avatar").style.display="flex";
             document.querySelector(".signed_in_avatar").style.display="none";
             document.getElementById("create_link").href ="login.html";
+
+            
+
+          //redirect to index page--- if not logged in,shouldn't have access to the myset page
+          window.location.replace("index.html");
           } ;
         });
       }
@@ -68,12 +74,12 @@
       </head>
       <body>
         <header>
-            <div class="navbar">
-                <a href="index.html">TALKY TALKY</a>
-                <a href="index.html">HOME</a>
-                <a href="create.html" id="create_link">CREATE</a>
-                <a href="about.html">ABOUT</a>
-              </div>
+          <div class="navbar">
+            <a href="index.html">TALKY TALKY</a>
+            <a href="index.html">HOME</a>
+            <a href="create.html" id="create_link">CREATE</a>
+            <a href="about.html">ABOUT</a>
+          </div>
     
           <div class="right-navbar">
             <div class="search-container">
@@ -93,70 +99,37 @@
             </div>
           </div>
         </header>
-       <div class="creatorHeader"></div>
-       <hr>
-       <div class="grid" style="gap:60px;margin-top:40px;"></div>
+       
+        <div class="search_results"></div>
         <script>
-            const params = new URLSearchParams(window.location.search); //gets the current url
-            var kind = params.get('kind');
-            console.log("the kind is : " + kind);
-            var creator = params.get('C');
-            var term_amount = params.get('A');
-            var set_title = params.get('T');
-
-            const creatorHeader = document.querySelector(".creatorHeader");
-            const title = document.createElement("h2");
-            title.className = "searchResult_title";
-            title.innerText = set_title;
-
-            const creatorP = document.createElement("p");
-            creatorP.className = "searchResult_creator";
-            creatorP.innerText=creator;
-
-                    
-            const termAmount = document.createElement("p");
-            termAmount.className = "searchResult_termAmount";
-            termAmount.innerText = term_amount;
-
-                    
-            creatorHeader.appendChild(title);
-            creatorHeader.appendChild(creatorP);
-            creatorHeader.appendChild(termAmount);
-            console.log(creatorHeader);
+          const params = new URLSearchParams(window.location.search); //gets the current url
+            var uid = params.get('uid'); // gets the value of the 'search' key
+            console.log("the uid = " + uid);
             $(document).ready(function(){
                 
                 $.ajax({
-                url:"/list-set",
+                url:"/mysets-results",
                 method:"POST",
                 dataType:'json',
                 data:{ 
                 
-                    kind:kind,
+                    uid:uid,
                 
                 },
                 cache:false,
                 success:function(data)
                 {
-                    if(data.length==0){
-                    alert("The set you are trying to view, does not exist. You will be redirected to the home page.")
-                    //redirect to index page --because set no longer exist 
-                    window.location.replace("index.html");
-                    }
-                    console.log("viewSet: in success?");
+                    console.log("in success?");
                     console.log(data);
                     console.log("json length is: " + data.length);
                     console.log(data[0]);
-                    const setListElement = document.querySelector(".grid");
+                    const setListElement = document.querySelector(".search_results");
                     for(let i = 0; i < data.length; i++) {
-                        console.log("in foor loop");
-                        setListElement.appendChild(createSetElement(data[i]));
+                       
+                        //create the element to display all the sets of this user
+                        setListElement.appendChild(createMySetsResult(data[i]));
                     }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                alert(xhr.status + thrownError);
-                
-                console.log(thrownError);
-            }
+                }
                 });
                 
 
