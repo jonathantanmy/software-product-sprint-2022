@@ -44,7 +44,7 @@
             //if the user who trying to edit this dataset is the not user who created the dataset
             if ((uid_param !== uid)){
                 //redirect to index page
-               // window.location.replace("index.html");
+                window.location.replace("index.html");
                console.log(" it doesn't matches-the uid ")
             } else {
                 console.log("it matches the uid")
@@ -104,7 +104,7 @@
               <button></button>
               <ul>
                 <li><a href="#" id="mySets_link">My Sets</a></li>
-                <li><a href="#">Settings</a></li>
+                <li><a href="settings.html">Settings</a></li>
                 <li ><a href="logout.html">Log Out</a></li>
               </ul>
             </div>
@@ -232,14 +232,20 @@
                 if (term) { //if true, means empty input 
                     canSubmit=false;
                     document.getElementById("create_error_messages").innerText = "ALL CARDS MUST HAVE A TERM OR REMOVE UNUSED CARDS";
+                    console.log("shouldn't be able to submit");
                 }        
    
-    });
+            });
+            var count = document.querySelector(".duplicate-row");
+                if (count == null) { //if true, means there no term card 
+                    canSubmit=false;
+                    document.getElementById("create_error_messages").innerText = "CAN'T SUBMIT AN EMPTY SET. PLEASE ADD A TERM.";
+                }
 
-    if(canSubmit){
-        submitForm.submit(); //submits the form
-    }
-            
+            if(canSubmit){
+                submitForm.submit(); //submits the form
+            }
+                    
 
         }
 

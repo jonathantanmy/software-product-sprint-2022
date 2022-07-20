@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>TEAM-23 PROJECT</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="setting.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -27,25 +28,26 @@
             var name = user.displayName;
             var email = user.email;
             const photoURL = user.photoURL;
+            var uid = user.uid;
             document.getElementById('name').innerText = user.displayName;
-            document.getElementById('email').innerText = user.email;
+            console.log("user"+ user.displayName);
+            document.getElementById('acctEmail').setAttribute("placeholder", user.email);
               console.log("there is a user");
-              console.log(document.getElementById('p1'));
               console.log(name);
               console.log(email);
               console.log(photoURL)
-              var name2 = user.photoURL
-              var name3 = " " + name2;
-              name3.innerText += "&quot;&quot;"
-              console.log(name3);
-              console.log(name2);
-            document.querySelector(".avatar").style.display="none";
+              document.querySelector(".avatar").style.display="none";
             document.querySelector(".signed_in_avatar").style.display="block";
+            document.querySelector(".signed_in_avatar").style.backgroundImage= `url('${user.photoURL}')`;
+            document.querySelector(".profilePicPreview").style.backgroundImage= `url('${user.photoURL}')`;            
             document.getElementById("create_link").href ="create.html";
+            document.getElementById("mySets_link").href ="myset.html?uid="+ uid;
           }else {
             document.querySelector(".avatar").style.display="flex";
             document.querySelector(".signed_in_avatar").style.display="none";
             document.getElementById("create_link").href ="login.html";
+            //redirect to index page
+            window.location.replace("index.html");
           } ;
         });
       }
@@ -76,8 +78,8 @@
           <div class="navbar">
             <a href="index.html">TALKY TALKY</a>
             <a href="index.html">HOME</a>
-            <a href="" id="create_link">CREATE</a>
-            <a href="#">ABOUT</a>
+            <a href="create.html" id="create_link">CREATE</a>
+            <a href="about.html">ABOUT</a>
           </div>
     
           <div class="right-navbar">
@@ -89,63 +91,73 @@
             </div>
             <div class="avatar"><a href="login.html"><i class="fa fa-user"></i></a></div>
             <div class="signed_in_avatar">
-              <button><i class="fa fa-user"></i></button>
+              <button></button>
               <ul>
-                <li><a href="#">My Sets</a></li>
+                <li><a href="#" id="mySets_link">My Sets</a></li>
                 <li><a href="settings.html">Settings</a></li>
                 <li ><a href="logout.html">Log Out</a></li>
               </ul>
             </div>
           </div>
         </header>
-        <div class="about-section">
+        <div class="setting-section">
+           
+            <div class="profile_section">
 
-            <h2>Update Your Name</h2>
-            <p id="name">Name</p>
-            <div class="updateacctform">
+                <div class="profilePic_outer">
+                    <div class="profilePicPreview"></div>
+                </div>
+                <div id="name_box">
+                <h1 id="name">Name</h1> 
+                </div>
+            </div>
+            
+
+            <form>
+                <label> UPDATE PROFILE PIC WITH IMAGE URL:</label><br>
+                <input type="text" name="file" id="pfpFile" placeholder="Image Url....">
+                <input type="button" id='button' value = "UPDATE PROFILE PIC" onclick="updateProfileLink()">
+            </form>
+            <br>
+             <div class="updateacctform">
     
-                <input id="acctName" type="name" placeholder="name">
+                <label> UPDATE YOUR NAME:</label><br>
+                <input id="acctName" type="name" placeholder="New Name....">
     
-                <input type="button" id='button' value = "Update" onclick="updatethename()">
+                <input type="button" id='button' value = "UPDATE NAME" onclick="updatethename()">
                 
             </div>
+           
             <br>
-
-            <h2>Update your email</h2>
-            <p id="p2">Current Email:</p>
-            <p id="email">Email</p>
             <div class="updateacctform">
-
+                <label> Update your email:</label><br>
                 <input id="acctEmail" type="email" placeholder="Email">
     
-                <input type="button" id='button' value = "Update" onclick="updatetheEmail()">
+                <input type="button" id='button' value = "UPDATE EMAIL" onclick="updatetheEmail()">
             
             </div>
 
             <br>
 
-            <h2>Update your password</h2>
+           
             <div class="updateacctform">
     
+                <label> Update your Password:</label><br>
                 <input id="acctPassword" type="password" placeholder="Password">
     
-                <input type="button" id='button' value = "Update" onclick="updatethepasword()">
+                <input type="button" id='button' value = "UPDATE PASSWORD" onclick="updatethepasword()">
                 
             </div>
 
             <br>
 
-            <h2>Update your Profile Picture</h2>
-                  <form id="uploadform" target="upiframe" action="upload.php" method="post" enctype="multipart/form-data">
-                    <input type="file" name="fileToUpload" class="test" onchange="yourFunction()">
-                  </form>
-                  <iframe id="upiframe" name="upiframe" witdh="0px" height="0px" border="0" style="width:0; height:0; border:none;"></iframe>
-                    </form>
-
-                  </div>
-                </div>
-              </div>
+            
+                 
+               
+             
         </div>
+        </div>
+            
         <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
         <script>
           var config = {
@@ -154,18 +166,35 @@
           };
           firebase.initializeApp(config);
         </script>
+     
         <script>
-            var name = user.displayName
-            document.getElementById('p1').innerText = user.displayName;
+           
 
-            var name2 = user.photoURL
-            var pic = document.getElementById('imaged');
-            pic.src=name2;
+            function updateProfileLink(){
+                console.log("hello");
+                firebase.auth().onAuthStateChanged(function (firebaseUser) { 
+            if (firebaseUser) { 
+            var imageLink = document.getElementById('pfpFile').value; 
+            const user = firebase.auth().currentUser;
 
-
-            function yourFunction() {
-            document.getElementById("uploadform").submit()
+            user.updateProfile({
+           
+            photoURL: imageLink
+            }).then(() => {
+            console.log("updated successfully");
+            }).catch((error) => {
+            // An error occurred
+            console.log(error);
+            // ...
+            });  
+            
+           
             }
+            });
+            window.location.reload();
+            }
+
+
 
         function updatetheEmail(){
             firebase.auth().onAuthStateChanged(function (firebaseUser) { 

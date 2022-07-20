@@ -185,7 +185,7 @@ for (Part  old_filePart :  old_fileParts) {
             datastore.put(set);
 
              //update the hasImage to be true
-             set = Entity.newBuilder(set).set("hasImage", "true").build();
+             set = Entity.newBuilder(set).set("hasImage", true).build();
              datastore.put(set);
 
         }// else of if-else
@@ -195,14 +195,15 @@ for (Part  old_filePart :  old_fileParts) {
 
         //if there no file, and the term used to have an img associated with it, delete it 
         boolean hadImageBoolean=Boolean.parseBoolean(had_img[old_i]);  
-        if(hadImageBoolean){
+        boolean changed_imgBoolean = Boolean.parseBoolean(changed_img[old_i]);
+        if(hadImageBoolean&&changed_imgBoolean){
             String imgName = Jsoup.clean(old_img_name[old_i], Whitelist.none());//get the old image name
             deleteObject(imgName);//deletes the img
             Key setKey = keyFactory.newKey(id);
             Entity set = datastore.get(setKey);
 
             //update the hasImage 
-            set = Entity.newBuilder(set).set("hasImage", "false").build();
+            set = Entity.newBuilder(set).set("hasImage", false).build();
             datastore.put(set);
 
              //update the image url 

@@ -101,7 +101,7 @@ for (Part filePart : fileParts) {
     System.out.println("in for each");
     String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); 
     String uniqueFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString()+System.currentTimeMillis();
-   
+    long timestamp2 = System.currentTimeMillis();
     //if there is a file
     if (fileName.length() != 0) {
     InputStream fileContent = filePart.getInputStream();
@@ -121,7 +121,7 @@ FullEntity taskEntity2 =
         .set("hasImage", true)
         .set("url", uploadedFileUrl)
         .set("imageName",uniqueFileName)
-        .set("timestamp", timestamp)
+        .set("timestamp", timestamp2)
         .build();
 datastore2.put(taskEntity2);
 
@@ -150,8 +150,8 @@ datastore2.put(taskEntity2);
     i++;
 }
 
-    //redirect to index
-    response.sendRedirect("/index.html");
+    //redirect to view the set /viewSet.html?kind=Boop%20beep1658007438145&C=Luffy&A=6&T=Boop%20beep
+    response.sendRedirect("/viewSet.html?kind="+setNameKind+"&C="+user+"&A="+ message.length+"&T="+setName);
 }
 
 

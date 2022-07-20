@@ -86,11 +86,8 @@
             <div class="signed_in_avatar">
               <button></button>
               <ul>
-
                 <li><a href="#" id="mySets_link">My Sets</a></li>
-               
                 <li><a href="settings.html">Settings</a></li>
-
                 <li ><a href="logout.html">Log Out</a></li>
               </ul>
             </div>
@@ -140,6 +137,11 @@
                 cache:false,
                 success:function(data)
                 {
+                    if(data.length==0){
+                    alert("The set you are trying to view, does not exist. You will be redirected to the home page.")
+                    //redirect to index page --because set no longer exist 
+                    window.location.replace("index.html");
+                    }
                     console.log("viewSet: in success?");
                     console.log(data);
                     console.log("json length is: " + data.length);

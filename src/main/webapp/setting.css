@@ -1,0 +1,97 @@
+h1#name {
+    color: #5454bd;
+    display: contents;
+}
+h1#name:before {
+    content: "HELLO ";
+    color: black;
+    font-family: emoji;
+    font-size: 24px;
+}
+
+
+.profilePicPreview {
+    aspect-ratio: 1/1;
+    width: 154px;
+    border-radius: 50%;
+    background: #fde4e485;
+    border: 1px solid #9191a7;
+    position: absolute;
+    top: 4%;
+    left: 4%;
+}
+
+.profilePic_outer {
+    aspect-ratio: 1/1;
+    width: 170px;
+    border-radius: 50%;
+    background: #fde4e429;
+    border: 1px solid #737397;
+    position: relative;
+}
+label {
+    font-family: fangsong;
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: bolder;
+}
+
+input#acctName,input#acctEmail, input#acctPassword, input#pfpFile {
+width: 100%;
+border-radius: 2px;
+border: solid 1px #dcdcdc;
+padding: 4px;
+font-size: 14px;
+}
+
+input#button{
+    height: 23px;
+    width: 103%;
+    border-radius: 4px;
+    border: solid 1px #facfd4;
+    font-family: emoji;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    background-color: #f9e1e1;
+    transition: 0.5s;
+    background-size: 200% auto;
+    box-shadow: 0 0 20px #eee;
+    background-image: linear-gradient( to right, #f9e1e1 50%, #bfe9ff 10%, #ffcbd1 40% );
+    transition: 0.5s;    
+}
+
+input#button:hover{
+    background-image: linear-gradient( to right, #ff6e7f 0%, #bfe9ff 51%, #ff6e7f 100% );
+    background-position: right center;
+    color: RIGHT;
+    color: #fff;
+    text-decoration: none;
+}
+.profilePicPreview{
+    background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.profile_section {
+    display: flex;
+    gap: 10px;
+    align-content: stretch;
+    align-items: center;
+}
+div#name_box {
+    display: flex;
+    flex-direction: column;
+ 
+    gap: 13px;
+
+    align-items: center;
+}
+
+.setting-section {
+    width: fit-content;
+    margin: auto;
+        margin-top: 20px;
+    
+}
