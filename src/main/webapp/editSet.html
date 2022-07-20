@@ -232,14 +232,20 @@
                 if (term) { //if true, means empty input 
                     canSubmit=false;
                     document.getElementById("create_error_messages").innerText = "ALL CARDS MUST HAVE A TERM OR REMOVE UNUSED CARDS";
+                    console.log("shouldn't be able to submit");
                 }        
    
-    });
+            });
+            var count = document.querySelector(".duplicate-row");
+                if (count == null) { //if true, means there no term card 
+                    canSubmit=false;
+                    document.getElementById("create_error_messages").innerText = "CAN'T SUBMIT AN EMPTY SET. PLEASE ADD A TERM.";
+                }
 
-    if(canSubmit){
-        submitForm.submit(); //submits the form
-    }
-            
+            if(canSubmit){
+                submitForm.submit(); //submits the form
+            }
+                    
 
         }
 

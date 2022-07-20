@@ -214,3 +214,6 @@ button#set_submit_button:hover {
   align-items: center;
 }
 
+p#create_error_messages {
+    color: #b70000;
+}
