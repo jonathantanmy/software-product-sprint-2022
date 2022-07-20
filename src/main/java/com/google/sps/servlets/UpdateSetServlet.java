@@ -195,7 +195,8 @@ for (Part  old_filePart :  old_fileParts) {
 
         //if there no file, and the term used to have an img associated with it, delete it 
         boolean hadImageBoolean=Boolean.parseBoolean(had_img[old_i]);  
-        if(hadImageBoolean){
+        boolean changed_imgBoolean = Boolean.parseBoolean(changed_img[old_i]);
+        if(hadImageBoolean&&changed_imgBoolean){
             String imgName = Jsoup.clean(old_img_name[old_i], Whitelist.none());//get the old image name
             deleteObject(imgName);//deletes the img
             Key setKey = keyFactory.newKey(id);
